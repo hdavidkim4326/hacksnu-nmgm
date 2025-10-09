@@ -25,7 +25,14 @@ class ChatroomUser(models.Model):
 
 class Thread(models.Model):
     room = models.ForeignKey(Chatroom, on_delete=models.CASCADE)
-    topic_summary = models.TextField()
+    topic_summary = models.TextField(null = True)
+    metadata = models.JSONField(null=True)
+    
+    def generate_metadata(self):
+        self.topic_summary = self.summarize_topic()
+        self.chat_type = self.classify_chat_type() # 의사결정, 감정공유, 갈등조율, 정보교환, 사담/농담
+        self.save()
+
 
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -35,8 +42,20 @@ class Message(models.Model):
     content = models.TextField()
     sent_time = models.DateTimeField(auto_now_add=True)
     metadata = models.JSONField(null=True)
-    embedding = VectorField(null=False, dimensions = 1024)
+    embedding = VectorField(null=True, dimensions = 1024)
 
     def __str__(self):
         return f"Message {self.id} by {self.user.name} in {self.room.name}"
+    
+    def generate_metadata(self):
+        self.embeddings = self.embed() # generate embedding vector and store
+        self.link_messages() # categorize message to thread and link related_message
+        self.pos_tag() # pos_tagging - softening words, pronouns, connectives, intensifers
+        self.information_measure() # information measure - how many sentences is this message? (perhaps 0.5, perhaps 2)
+        self.count_emojis() # emoji count
+        self.emotion_vector() # circumplex model : valence, arousal
+        self.ending_morphemes() # sentence ending morphemes
+        self.readability_measure() # readability measure : Flesch-Kincaid, Gunning Fog, SMOG, Coleman-Liau
+        self.message_type() # question, response, link, attachment
 
+        self.save()

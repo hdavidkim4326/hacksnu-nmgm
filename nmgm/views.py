@@ -12,3 +12,15 @@ def add_user(request):
         user = User(name=name, email=email)
         user.save()
         return HttpResponse(f"User {name} added successfully.")
+
+def add_message(request):
+    pass
+
+def generate_chatroom_report(request):
+    pass
+
+def generate_user_report(request):
+    pass
+
+def suggest_message_edit(request):
+    pass
