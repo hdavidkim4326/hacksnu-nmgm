@@ -51,5 +51,3 @@ result2 = classifier(
     # candidate_labels = ["related", "unrelated"],
     # hypothesis_template = "This message is {} to the previous message:" + msg2
 )
-
-breakpoint()

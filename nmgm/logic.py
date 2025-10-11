@@ -91,6 +91,7 @@ class ChatroomProcessor:
             else None
         )
         curr_thread = prev_msg.thread if prev_msg and prev_msg.thread else None
+        breakpoint()
 
         for message in untagged_messages:
             if not curr_thread:  # no current thread
@@ -100,12 +101,14 @@ class ChatroomProcessor:
                 message.save()
             else:
                 if (
-                    message.sent_time - prev_msg.sent_time < timedelta(minutes=30)
+                    message.sent_time - prev_msg.sent_time <= timedelta(minutes=30)
                     or self.relatedness(prev_msg.content, message.content) # 전부 연관 있다고 해버리네;; 역치를 높여야 할 듯
                 ):
+                    breakpoint()
                     message.thread = curr_thread
                     message.save()
                 else:
+                    breakpoint()
                     curr_thread = Thread(room=self.chatroom)
                     message.thread = curr_thread
                     curr_thread.save()

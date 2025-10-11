@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import environ
-<<<<<<< HEAD
-=======
-
->>>>>>> 8136b315 ([add thread cut])
 env = environ.Env()
 
 environ.Env.read_env(env_file=".env")
@@ -27,11 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-<<<<<<< HEAD
-SECRET_KEY = 'django-insecure-t!%r)zhdm56%j5_)4bt)78ei!cwil8v-bu+jj@rk0!8+6j)@^a'
-=======
 SECRET_KEY = "django-insecure-t!%r)zhdm56%j5_)4bt)78ei!cwil8v-bu+jj@rk0!8+6j)@^a"
->>>>>>> 8136b315 ([add thread cut])
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,39 +34,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'nmgm',
-]
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-ROOT_URLCONF = 'config.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-=======
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -106,32 +65,18 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
->>>>>>> 8136b315 ([add thread cut])
             ],
         },
     },
 ]
 
-<<<<<<< HEAD
-WSGI_APPLICATION = 'config.wsgi.application'
-=======
 WSGI_APPLICATION = "config.wsgi.application"
->>>>>>> 8136b315 ([add thread cut])
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-<<<<<<< HEAD
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST' : env('DB_HOST'),
-        'NAME' : env('DB_NAME'),
-        'USER' : env('DB_USER'),
-        'PASSWORD' : env('DB_PASSWORD'),
-        'PORT' : env('DB_PORT'),
-=======
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": env("DB_HOST"),
@@ -139,7 +84,6 @@ DATABASES = {
         "USER": env("DB_USER"),
         "PASSWORD": env("DB_PASSWORD"),
         "PORT": env("DB_PORT"),
->>>>>>> 8136b315 ([add thread cut])
     }
 }
 
@@ -149,18 +93,6 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-<<<<<<< HEAD
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-=======
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
@@ -171,7 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
->>>>>>> 8136b315 ([add thread cut])
     },
 ]
 
@@ -179,15 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-<<<<<<< HEAD
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-=======
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
->>>>>>> 8136b315 ([add thread cut])
 
 USE_I18N = True
 
@@ -197,17 +122,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-<<<<<<< HEAD
-STATIC_URL = 'static/'
-=======
 STATIC_URL = "static/"
->>>>>>> 8136b315 ([add thread cut])
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-<<<<<<< HEAD
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-=======
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
->>>>>>> 8136b315 ([add thread cut])
