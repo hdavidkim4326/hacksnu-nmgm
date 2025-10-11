@@ -8,4 +8,9 @@ pgvector==0.4.1
 psycopg2-binary==2.9.10
 transformers==4.57.0
 sentence-transformers==5.1.1
+<<<<<<< HEAD
 konlpy==0.6.0
+=======
+konlpy==0.6.0
+pandas==2.3.3
+>>>>>>> 8136b315 ([add thread cut])

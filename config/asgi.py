@@ -11,6 +11,10 @@ import os
 
 from django.core.asgi import get_asgi_application
 
+<<<<<<< HEAD
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+=======
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+>>>>>>> 8136b315 ([add thread cut])
 
 application = get_asgi_application()

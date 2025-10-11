@@ -1,24 +1,55 @@
 # from sentence_transformers import SentenceTransformer
 
-# model_name = "sentence-transformers/bge-m3"
+# model_name = "upskyy/bge-m3-korean"
 # cache_dir = "./models/bge-m3"
 
-# model = SentenceTransformer("upskyy/bge-m3-korean", cache_folder=cache_dir)
+# model = SentenceTransformer("model_name", cache_folder=cache_dir)
 # model.save(cache_dir)
 
+
+# from konlpy.tag import Kkma
+
+# okt = Kkma()
+
+# text = "대표님 오늘 회의는 몇 시에 시작하시나요? 요즘 어떠신지...?"
+
+# print(okt.pos(text))
 
 # from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 # model_name = "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli"
-# cache_dir = "./models/mDeBERTa-v3-base-mnli-xnli"
+# save_dir = "./models/mDeBERTa-v3-base-mnli-xnli"
 
-# # Download and cache locally
-# tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
-# model = AutoModelForSequenceClassification.from_pretrained(model_name, cache_dir=cache_dir)
+# model = AutoModelForSequenceClassification.from_pretrained(model_name)
+# tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-from konlpy.tag import Kkma
-okt = Kkma()
+# model.save_pretrained(save_dir)
+# tokenizer.save_pretrained(save_dir)
 
-text = "대표님 오늘 회의는 몇 시에 시작하시나요? 요즘 어떠신지...?"
+from transformers import pipeline
 
-print(okt.pos(text))
+model_dir = "./models/mDeBERTa-v3-base-mnli-xnli"
+classifier = pipeline("text-classification", model=model_dir)
+
+msg1 = "흠 상황 봐서! 지금 아직 저녁 먹는중"
+msg2 = "그래 그때 상황 봐서 사와^^"
+msg3 = "아니아니 나 집에서 먹으려고, 아빠는?"
+msg4 = "아빠도 집에서 먹는대~"
+msg5 = "오케이 나 30분 뒤에 도착!"
+
+
+result = classifier(
+    msg1 + msg2,
+    # sequences = msg3,
+    # candidate_labels = ["related", "unrelated"],
+    # hypothesis_template = "This message is {} to the previous message:" + msg2
+)
+
+result2 = classifier(
+    msg3 + msg4,
+    # sequences = msg3,
+    # candidate_labels = ["related", "unrelated"],
+    # hypothesis_template = "This message is {} to the previous message:" + msg2
+)
+
+breakpoint()
