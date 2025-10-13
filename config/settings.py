@@ -1,18 +1,20 @@
 """
 Django settings for a DB-less Vercel deployment.
+This version is configured to work correctly in both local development
+and Vercel production environments.
 """
 from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
 SECRET_KEY = 'django-insecure-t!%r)zhdm56%j5_)4bt)78ei!cwil8v-bu+jj@rk0!8+6j)@^a'
 
-# Vercel's environment will set this to False in production.
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+# Vercel's 'VERCEL_ENV' variable is used to distinguish between environments.
+# It will be 'production' on Vercel, and won't exist locally,
+# so DEBUG will be True locally and False in production.
+DEBUG = os.environ.get('VERCEL_ENV') != 'production'
 
-# All hosts are allowed for this simple mockup site.
 ALLOWED_HOSTS = ['*']
 
 # Application definition - MINIMAL set for a DB-less site
@@ -41,8 +43,6 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
-                # 'django.contrib.auth.context_processors.auth',      <- REMOVED
-                # 'django.contrib.messages.context_processors.messages', <- REMOVED
             ],
         },
     },
@@ -52,8 +52,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database - COMPLETELY DISABLED
 DATABASES = {}
-
-# Password validation - REMOVED
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -67,6 +65,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'nmgm' / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
