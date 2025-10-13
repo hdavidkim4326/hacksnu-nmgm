@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMGm - AI가 당신의 대화를 이해하고, 마음을 이어줍니다</title>
+    <!-- 파일명 변경: style.css -> landing-style.css -->
+    <link rel="stylesheet" href="{% static 'nmgm/css/landing-style.css' %}">
+    
+</head>
+<body>
+
+    <!-- ======== HEADER ======== -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="#" class="logo">NMGm</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">서비스 소개</a></li>
+                    <li><a href="#main-screens">주요 화면</a></li>
+                    <li><a href="#why-nmgm">Why NMGm?</a></li>
+                    <li><a href="#tech-intro">기술 소개</a></li>
+                </ul>
+            </nav>
+            <a href="main.html" target="_blank" class="btn btn-primary">
+                앱 MVP 보러가기
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ======== HERO SECTION ======== -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-text-content">
+                    <span class="welcome-badge">Welcome To NMGm</span>
+                    <h1>AI가 당신의 대화를 이해하고,<br>마음을 이어줍니다</h1>
+                    <p>말투와 감정을 읽어주는 대화 인사이트 플랫폼, NMGm. 당신의 채팅이 더 따뜻하고, 더 명확해지도록 AI가 실시간으로 돕습니다.</p>
+                    <div class="hero-buttons">
+                        <a href="main.html" target="_blank" class="btn btn-dark">
+                            앱 MVP 보러가기
+                            <span class="arrow-icon">→</span>
+                        </a>
+                        <a href="https://www.youtube.com" target="_blank" class="btn btn-outline">
+                            소개 영상 보러가기
+                            <span class="arrow-icon">→</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-mockup">
+                    <img src="{% static 'nmgm/images/phone-mockup.svg' %}" alt="App Mockup" style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== REPORT UPLOAD SECTION ======== -->
+        <section id="report-upload" class="report-upload-section fade-in-section">
+            <div class="container">
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <div class="upload-icon-wrapper">
+                            <img src="{% static 'nmgm/images/folder-icon.svg' %}" alt="Upload Icon">
+                        </div>
+                        <div class="upload-title-group">
+                            <h2>AI 채팅 분석 보고서 받아보기</h2>
+                            <p>채팅방 대화를 업로드하세요. AI가 당신의 대화 습관과 관계를 한눈에 읽어드립니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-main">
+                        <div class="upload-instructions">
+                            <span class="instruction-badge">① 기능 설명</span>
+                            <p>내말그말의 AI 분석 기술을 미리 체험해 볼 수 있습니다!<br>문맥, 감정, 말투, 의미 명확성, 관계 온도를 동시에 해석하는 자체 개발 AI 엔진으로, 당신의 채팅을 데이터로 분석합니다.</p>
+                        </div>
+                        <div class="file-drop-zone">
+                            <p>채팅방 csv 파일을 업로드하고, AI 리포트를 받아보세요</p>
+                            
+                            <input type="file" id="chat-file-input" hidden>
+                        </div>
+                    </div>
+
+                    <div class="upload-footer">
+                        <label for="chat-file-input" class="btn btn-analysis">
+                            AI 분석 시작하기 →
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== FEATURES SECTION (서비스 소개) ======== -->
+        <section id="features" class="features-section fade-in-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">서비스 소개</span>
+                    <h2>“대화를 분석하는 게 아니라,<br>이해하는 플랫폼”</h2>
+                    <p class="section-description">
+                        내일그말 NMGm은 사람의 말투-감정-맥락을 실시간으로 코칭하고, 대화의 흐름과 관계 변화를 분석하는 AI 대화 인사이트 플랫폼입니다.<br><br>
+                        카카오톡-인스타그램 등의 sns에서 키보드 API를 통해 실시간 코칭 기능을 제공하고,<br>
+                        자체 앱에서는 다양한 sns의 채팅방과 유저의 대화 습관에 대한 분석 리포트와 맞춤형 피드백을 제공합니다.
+                    </p>
+                </div>
+                <div class="features-content">
+                    <img src="{% static 'nmgm/images/app-main.svg' %}" alt="서비스 주요 기능 소개" class="feature-summary-svg">
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== MAIN SCREENS SECTION (주요 화면) ======== -->
+        <section id="main-screens" class="main-screens-section fade-in-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title-small">주요 화면 소개</h2>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-number">1</span>
+                    <div class="feature-card-text">
+                        <h3>실시간 대화 코칭</h3>
+                        <p>기존 SNS(카카오톡, 인스타그램 등)에서 메시지를 입력할 때, 키보드 API를 통해 말투-감정 등을 분석하고 더 자연스러운 표현을 제안합니다.</p>
+                    </div>
+                    <div class="feature-card-image">
+                        <img src="{% static 'nmgm/images/feature-image-1.png' %}" alt="실시간 대화 코칭">
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-number">2</span>
+                    <div class="feature-card-text">
+                        <h3>주요 sns 채팅방 불러오기 (Messenger Integration)</h3>
+                        <p>NMGm 앱에서는 주요 SNS의 대화방을 자동으로 불러와 각 관계별 감정 흐름과 대화 패턴을 분석해 시각화합니다.</p>
+                    </div>
+                    <div class="feature-card-image">
+                        <img src="{% static 'nmgm/images/feature-image-2.png' %}" alt="주요 sns 채팅방 불러오기">
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-number">3</span>
+                    <div class="feature-card-text">
+                        <h3>대화 분석 보고서 (AI Report)</h3>
+                        <p>NMGm의 리포트는 단순한 감정 그래프가 아닙니다. 언어심리학과 데이터에 근거한 지표로, 사용자의 대화 톤과 숨겨진 맥락을 세밀하게 시각화합니다. 사용자가 궁금한 내용을 챗봇을 통해 지속적으로 질문하고 탐구해나갈 수 있습니다.</p>
+                    </div>
+                    <div class="feature-card-image">
+                        <img src="{% static 'nmgm/images/feature-image-3.png' %}" alt="대화 분석 보고서">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="why-nmgm" class="why-nmgm-section fade-in-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge-light">Why NMGm?</span>
+                    <h2 class="text-light">AI로 “대화”를 이해하는 유일한 플랫폼</h2>
+                    <p class="section-description-light">단어가 아닌 관계를 분석하고, 감정을 데이터로 바꿉니다</p>
+                </div>
+                <div class="why-cards-container">
+                    <div class="why-card">
+                        <div class="why-card-icon">
+                        <i data-lucide="message-circle-code"></i>
+                        </div>
+                        <h3>실시간 코칭 엔진 <br>(API + App)</h3>
+                        <p>SNS에서 키보드 툴을 통해 실시간으로 감정과 말투를 분석하고,  
+                        더 자연스럽고 따뜻한 표현을 제안합니다.  
+                        </p>
+                    </div>
+
+                    <div class="why-card">
+                        <div class="why-card-icon">
+                        <i data-lucide="brain-circuit"></i>
+                        </div>
+                        <h3>문맥·감정을 이해하는 자체 AI</h3>
+                        <p>NMgM의 AI는 단순 감정 분석을 넘어 대화의 맥락, 감정까지 종합적으로 파악이 가능합니다.  
+                        한국어 특화 모델이 대화의 흐름을 정확히 해석합니다.</p>
+                    </div>
+
+                    <div class="why-card">
+                        <div class="why-card-icon">
+                        <i data-lucide="boxes"></i>
+                        </div>
+                        <h3>확장 가능한 대화 인사이트 플랫폼</h3>
+                        <p>개인 관계 코칭부터 상담·영업·교육 등 다양한 대화 환경으로 확장 가능합니다.  
+                        자체 AI 대화 분석 기술은 엄청난 강점입니다.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ======== TECH INTRO SECTION ======== -->
+        <section id="tech-intro" class="tech-intro-section fade-in-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">기술 소개</span>
+                    <h2>NMGm의 기술에 대해서</h2>
+                    <p class="section-description">NMGm은 단순한 감정 분류를 넘어, 실제 상담처럼 문맥·말투·맥락을 통합 분석하는 AI 시스템을 개발하고 있습니다.</p>
+                </div>
+
+                <div class="tech-content-container">
+                    <!-- Left Menu -->
+                    <ul class="tech-menu">
+                        <li class="tech-menu-item active" data-tab="tab-1">
+                            <h4>자체 AI 분석 로직</h4>
+                            <p>감정 너머의 맥락까지 읽는 다층 분석 구조</p>
+                        </li>
+                        <li class="tech-menu-item" data-tab="tab-2">
+                            <h4>리포트 및 코칭 기술</h4>
+                            <p>관계를 진단하고 성장을 돕는 데이터 기반 보고서</p>
+                        </li>
+                        <li class="tech-menu-item" data-tab="tab-3">
+                            <h4>개발 현황 및 로드맵</h4>
+                            <p>검증된 핵심 기술과 명확한 다음 단계</p>
+                        </li>
+                    </ul>
+
+                    <!-- Right Content -->
+                    <div class="tech-description">
+                        <!-- Content 1: 자체 AI 분석 로직 -->
+                        <div class="tech-content active" id="tab-1">
+                            <h3>다층적 AI 분석: 감정 너머의 맥락을 읽다</h3>
+                            <p>NMGm의 AI는 대화를 문장 단위로 분해해 감정·맥락·말투를 함께 고려하는 다층 분석 구조를 통해 심리상담 수준의 정밀한 피드백을 제공합니다.</p>
+                            <ul>
+                                <li><span>감정 분류:</span> 5단계 긍·부정 스케일로 세밀한 감정 변화를 포착합니다.</li>
+                                <li><span>문장 임베딩:</span> 문체와 유사도를 기반으로 문장의 숨은 의미 벡터를 추출합니다.</li>
+                                <li><span>Zero-shot 분류:</span> AI가 스스로 업무, 감정, 농담 등 대화의 성격을 자동 인식합니다.</li>
+                                <li><span>Thread 분석:</span> 시간과 의미 유사도에 따라 대화의 흐름과 주제를 재구성합니다.</li>
+                                <li><span>주제 요약 및 관계 분석:</span> LLM 기반으로 핵심 주제를 요약하고 관계의 성격을 정의합니다.</li>
+                            </ul>
+                        </div>
+                        <!-- Content 2: 리포트 및 코칭 기술 -->
+                        <div class="tech-content" id="tab-2">
+                            <h3>데이터 기반 리포트: 관계를 진단하고 성장을 코칭하다</h3>
+                            <p>단순히 감정을 수치화하는 것을 넘어, 대화의 질과 관계 변화를 종합적으로 측정하는 심층 보고서를 생성하여 실제 상담사처럼 유의미한 조언을 제공합니다.</p>
+                            <ul>
+                                <li><span>언어심리학 기반 지표:</span> 감정 일치율, 관계 온도, 대화 명확성 등 논문 기반의 깊이 있는 지표를 제공합니다.</li>
+                                <li><span>대화 흐름 시각화:</span> 복잡한 대화의 흐름과 감정의 시계열 변화를 직관적인 그래프로 분석합니다.</li>
+                                <li><span>상담사급 AI 코멘트:</span> LLM 기반의 AI가 분석 결과를 해석하고 실제 상담사처럼 구체적인 조언을 건넵니다.</li>
+                                <li><span>Seamless Experience:</span> CSV 업로드 시 PDF 형태의 심층 분석 리포트가 자동으로 생성됩니다.</li>
+                            </ul>
+                        </div>
+                        <!-- Content 3: 개발 현황 및 로드맵 -->
+                        <div class="tech-content" id="tab-3">
+                            <h3>검증된 핵심 기술과 명확한 로드맵</h3>
+                            <p>NMGm은 MVP 단계에서 이미 주요 AI 기능 구현을 완료했으며, 데이터 연동 및 자동화 기능 개발을 통해 완전한 실시간 서비스로 나아가고 있습니다.</p>
+                            <div class="roadmap-container">
+                                <div class="roadmap-column">
+                                    <h4>MVP-Ready (현재)</h4>
+                                    <ul>
+                                        <li class="done">AI 보고서 자동 생성 시스템</li>
+                                        <li class="done">실시간 코칭(키보드 API) 엔진</li>
+                                        <li class="done">앱 UI 프로토타입 (Figma, React)</li>
+                                    </ul>
+                                </div>
+                                <div class="roadmap-column">
+                                    <h4>Next Step (Q4)</h4>
+                                    <ul>
+                                        <li class="pending">SNS API 연동 (데이터 자동 수집)</li>
+                                        <li class="pending">클라우드 기반 대화 로그 암호화</li>
+                                        <li class="pending">실시간 데이터 파이프라인 구축</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="cta" class="cta-section fade-in-section">
+            <div class="container">
+                <h2>세상의 모든 오해는 '대화의 단절'에서 시작됩니다.</h2>
+                <p>NMGm은 감정을 이해하는 기술로 단절된 마음을 잇고,<br>더 나은 관계를 향한 길을 안내합니다.</p>
+            </div>
+        </section>
+    </main>
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <a href="#" class="footer-logo">NMGm</a>
+                <p class="footer-description">AI platform that understands your conversations — helping people communicate better and grow through dialogue</p>
+            </div>
+            <div class="footer-right">
+                <p class="copyright-text">© 2025 All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+    <!-- 파일명 변경: script.js -> landing-script.js -->
+    <script src="{% static 'nmgm/js/landing-script.js' %}"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+    lucide.createIcons();
+    </script>
+</body>
+</html>
+
