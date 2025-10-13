@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMGm 대시보드</title>
+    <link rel="stylesheet" href="{% static 'nmgm/css/style.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div>
+                <p class="greeting">안녕하세요 👋</p>
+                <p class="user-name">{{ user.name | default:"김하윤" }} 님 👑</p> {# 실제 사용자 이름 변수: user.name #}
+            </div>
+        </header>
+
+        <main>
+            <div class="search-bar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 21L16.65 16.65" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <input type="text" placeholder="채팅방 찾기">
+            </div>
+
+            <section class="habit-report-card">
+                <div class="report-content">
+                    <h2 class="report-title">{{ user.name | default:"하윤" }}님의 대화 습관 리포트 💬</h2>
+                    <div class="report-summary">
+                        <div class="feedback-section">
+                            <h3 class="feedback-title">AI 한줄 피드백</h3>
+                            {# habits_report.feedback 변수로 AI 피드백 전달 #}
+                            <p class="feedback-text">{{ habits_report.feedback | default:"이번주는 부드러운 한 주 였어요. 공손한 말투가 늘었고, 괜찮아요 표현의 사용이 잦았어요 🙂" }}</p>
+                            <a href="{% url 'user_detail' %}" class="btn-detail">자세한 분석 보기</a>
+                        </div>
+                        <div class="emotion-section">
+                            <h3 class="emotion-title">이 주의 대화 감정</h3>
+                            <div class="emotion-chart" style="--value: {{ habits_report.positive_score | default:85 }};">
+                                <span class="emotion-label">긍정</span>
+                                <span class="emotion-score">{{ habits_report.positive_score | default:85 }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <nav class="sns-filter">
+                <button class="filter-btn active">Kakao</button>
+                <button class="filter-btn">Instagram</button>
+                <button class="filter-btn">Slack</button>
+            </nav>
+
+            <section class="chat-list-section">
+                <div class="list-header">
+                    <h2 class="list-title">채팅방 리스트</h2>
+                    <div class="sync-info">
+                        <span>동기화 시간 13:07</span>
+                        <button class="btn-sync">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23 4V10H17" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M1 20V14H7" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.51 9A8.99998 8.99998 0 0 1 20.49 15" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.49 9A8.99998 8.99998 0 0 1 3.51 15" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-list">
+                    <article class="chat-item">
+                        <div class="chat-main-info">
+                            <img src="https://i.pravatar.cc/150?img=5" alt="Ronald Richards" class="profile-pic">
+                            <div class="chat-text-info">
+                                <div class="chat-info-header">
+                                    <span class="chat-name">Ronald Richards</span>
+                                    <span class="chat-time">11:25</span>
+                                </div>
+                                <p class="chat-preview">다음에 가면 너무 좋겠...</p>
+                            </div>
+                        </div>
+                        <div class="chat-analysis-summary">
+                            <p class="summary-title">💬 대화 문장 요약</p>
+                            <p class="summary-text">"서로의 대화 템포가 잘 맞아요"</p>
+                            <div class="keywords-section">
+                                <span class="keywords-title">관계 키워드</span>
+                                <div class="keywords">
+                                    <span class="keyword-tag">#공감형</span>
+                                    <span class="keyword-tag">#활발한 대화</span>
+                                    <span class="keyword-tag">#감정 풍부</span>
+                                </div>
+                            </div>
+                            <a href="detail.html" class="chat-detail-link">상세 분석 보기 &gt;</a>
+                        </div>
+                    </article>
+
+                    <article class="chat-item">
+                        <div class="chat-main-info">
+                            <img src="https://i.pravatar.cc/150?img=11" alt="3팀 프로젝트 회의방" class="profile-pic">
+                            <div class="chat-text-info">
+                                <div class="chat-info-header">
+                                    <span class="chat-name">3팀 프로젝트 회의방 (4)</span>
+                                    <span class="chat-time">어제 18:40</span>
+                                </div>
+                                <p class="chat-preview">네, 내일 오전까지 공유드리겠습니다.</p>
+                            </div>
+                        </div>
+                        <div class="chat-analysis-summary">
+                            <p class="summary-title">💬 대화 문장 요약</p>
+                            <p class="summary-text">"주로 업무 관련 정보 공유가 많아요"</p>
+                            <div class="keywords-section">
+                                <span class="keywords-title">관계 키워드</span>
+                                <div class="keywords">
+                                    <span class="keyword-tag">#업무 중심</span>
+                                    <span class="keyword-tag">#간결한 소통</span>
+                                </div>
+                            </div>
+                            <a href="detail.html" class="chat-detail-link">상세 분석 보기 &gt;</a>
+                        </div>
+                    </article>
+
+                    <article class="chat-item">
+                        <div class="chat-main-info">
+                            <img src="https://i.pravatar.cc/150?img=32" alt="주말 라이딩 갈 사람!" class="profile-pic">
+                            <div class="chat-text-info">
+                                <div class="chat-info-header">
+                                    <span class="chat-name">주말 라이딩 갈 사람! (6)</span>
+                                    <span class="chat-time">오후 09:12</span>
+                                </div>
+                                <p class="chat-preview">ㅋㅋㅋㅋㅋ 진짜 웃기다</p>
+                            </div>
+                        </div>
+                        <div class="chat-analysis-summary">
+                        
+                            <p class="summary-title">💬 대화 문장 요약</p>
+                            <p class="summary-text">"유머러스한 대화가 주를 이뤄요"</p>
+                            <div class="keywords-section">
+                                <span class="keywords-title">관계 키워드</span>
+                                <div class="keywords">
+                                    <span class="keyword-tag">#유머</span>
+                                    <span class="keyword-tag">#빠른 템포</span>
+                                    <span class="keyword-tag">#계획 공유</span>
+                                </div>
+                            </div>
+                            <a href="detail.html" class="chat-detail-link">상세 분석 보기 &gt;</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{% static 'nmgm/js/script.js' %}"></script>
+</body>
+</html>
