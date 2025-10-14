@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMgM - AI 대화 분석 리포트</title>
+    <link rel="stylesheet" href="{% static 'css/landing-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/report-style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+</head>
+<body>
+    <header class="main-header scrolled">
+        <div class="container header-container">
+            <a href="{% url 'landing' %}" class="logo">NMgM</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'landing' %}#features">서비스 소개</a></li>
+                    <li><a href="{% url 'landing' %}#main-screens">주요 화면</a></li>
+                    <li><a href="{% url 'landing' %}#why-nmgm">Why NMgM?</a></li>
+                    <li><a href="{% url 'landing' %}#tech-intro">기술 소개</a></li>
+                </ul>
+            </nav>
+            <a href="{% url 'prototype' %}" target="_blank" class="btn btn-primary">앱 MVP 보러가기</a>
+        </div>
+    </header>
+
+    <main class="report-main">
+        <div class="container" id="report-container">
+            <!-- 데이터가 로드되면 여기에 동적으로 콘텐츠가 채워집니다 -->
+            <div class="loading-spinner"></div>
+        </div>
+    </main>
+
+    <script src="{% static 'js/report-script.js' %}"></script>
+</body>
+</html>
