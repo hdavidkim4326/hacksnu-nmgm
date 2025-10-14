@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대화 습관 리포트</title>
+    <link rel="stylesheet" href="{% static 'nmgm/css/style.css' %}">
+</head>
+<body>
+    <div class="report-container">
+        <header class="report-header">
+            <a href="{% url 'index' %}" class="icon-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="#121212" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <h1 class="report-page-title">하윤님의 대화 습관 리포트</h1>
+            <button class="icon-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="#121212" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 22.0001 12 22C11.6496 22.0001 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="#121212" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </button>
+        </header>
+
+        <main class="report-content-area">
+            <section class="report-card accordion-card">
+                <div class="accordion-header">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">🛍️</span>
+                    </div>
+                    <div class="card-title-group">
+                        <h2 class="card-title">대화 유형</h2>
+                        <p class="card-subtitle">냉철한 분석가</p>
+                    </div>
+                    <div class="chevron-icon">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p>
+                        '냉철한 분석가' 유형은 감정적인 표현보다는 사실과 논리에 기반한 대화를 선호하는 경향이 있습니다. 
+                        문제 해결에 강점을 보이며, 대화의 핵심을 빠르게 파악합니다.
+                    </p>
+                </div>
+            </section>
+
+            <section class="report-card">
+                <h2 class="card-title">AI 한줄 요약</h2>
+                <p class="card-text">
+                    하윤님은 대화에서 객관적인 정보를 전달하고 사실 관계를 명확히 하는 데 강점을 보입니다.
+                </p>
+            </section>
+
+            <section class="report-card">
+                <h2 class="card-title">상세 설명</h2>
+                <p class="card-text">
+                    최근 대화 로그를 분석한 결과, 하윤님은 감정에 호소하기보다 구체적인 데이터나 근거를 들어 자신의 의견을 표현하는 경향이 82% 더 높게 나타났습니다. 
+                    이는 명확한 소통이 중요한 업무 환경이나 토론에서 매우 효과적인 화법입니다. 다만, 때로는 상대방의 감정을 먼저 공감해주는 표현을 함께 사용하면 더욱 부드럽고 유연한 관계를 만드는 데 도움이 될 수 있습니다.
+                </p>
+            </section>
+        </main>
+        
+        <footer class="report-footer">
+            <button class="btn-primary">챗봇 상담 받기</button>
+        </footer>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

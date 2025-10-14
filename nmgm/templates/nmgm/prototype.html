@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMgM - 프로토타입 체험</title>
+    <link rel="stylesheet" href="{% static 'css/landing-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/prototype-style.css' %}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- 랜딩페이지 헤더 재사용 -->
+    <header class="main-header scrolled">
+        <div class="container header-container">
+            <a href="{% url 'landing' %}" class="logo">NMgM</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'landing' %}#features">서비스 소개</a></li>
+                    <li><a href="{% url 'landing' %}#main-screens">주요 화면</a></li>
+                    <li><a href="{% url 'landing' %}#why-nmgm">Why NMgM?</a></li>
+                    <li><a href="{% url 'landing' %}#tech-intro">기술 소개</a></li>
+                </ul>
+            </nav>
+            <a href="{% url 'landing' %}#report-upload" class="btn btn-primary">메인 페이지 돌아가기</a>
+        </div>
+    </header>
+
+    <main class="prototype-main">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title-small">프로토타입 체험</h2>
+            </div>
+
+            <div class="toggle-buttons">
+                <button class="toggle-btn active" data-target="app-prototype">NMgM 어플 프로토타입</button>
+                <button class="toggle-btn" data-target="api-prototype">API 프로토타입</button>
+            </div>
+
+            <p id="prototype-description" class="prototype-description">NMgM 어플의 구조를 직접 경험해보세요! 앱에서는 실제 대화를 기반으로 한 관계 리포트를 동시에 받아볼 수 있습니다. AI가 당신의 말투와 감성을 이해하고, 더 따뜻하고 명확한 대화를 돕습니다.</p>
+
+            <div class="display-frame">
+                <!-- NMGm 어플 프로토타입 -->
+                <div id="app-prototype" class="prototype-content active">
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <!-- Screen 1: 시작 화면 (새로운 디자인) -->
+                            <div class="app-screen active" id="app-screen-1">
+                                <div class="login-screen-content">
+                                    <header class="login-header">NMgM</header>
+                                    <div class="login-main">
+                                        <h1 class="login-title">NMgM<br>내말그말</h1>
+                                        <p class="login-subtitle">당신의 말 사이, 진심을 이해하는 플랫폼</p>
+                                    </div>
+                                    <footer class="login-footer">
+                                        <button class="btn-demo-login" id="btn-start-demo">데모 로그인하기</button>
+                                        <p class="signup-link">아직 계정이 없으신가요?</p>
+                                    </footer>
+                                </div>
+                            </div>
+                            <!-- Screen 2: 채팅 목록 (새로운 디자인) -->
+                            <div class="app-screen" id="app-screen-2">
+                                <div class="app-dashboard-container">
+                                    <header class="app-header">
+                                        <div class="app-logo">NMgM</div>
+                                        <div>
+                                            <p class="app-greeting">안녕하세요 👋</p>
+                                            <p class="app-user-name">김하윤 님</p>
+                                        </div>
+                                    </header>
+                                    <main class="app-main">
+                                        <div class="app-search-bar"><input type="text" placeholder="채팅방 찾기"></div>
+                                        <section class="app-habit-card">
+                                            <div class="app-habit-text">
+                                                <h4>하윤님의 대화 습관 리포트 💬</h4>
+                                                <p>AI 한줄 피드백: 하윤님, 이번주는 부드러운 한 주였어요. 공손한 말투가 늘었고, 괜찮아요 표현을 자주 사용했어요 🙂</p>
+                                                <button class="app-btn-detail">자세한 분석 보기</button>
+                                            </div>
+                                            <div class="app-habit-chart">
+                                                <p>이 주의 대화 감정</p>
+                                                <div class="app-emotion-score"><span>긍정</span><strong>85%</strong></div>
+                                            </div>
+                                        </section>
+                                        <nav class="app-sns-filter">
+                                            <button class="sns-filter-btn active" data-platform="kakao">Kakao</button>
+                                            <button class="sns-filter-btn" data-platform="instagram">Instagram</button>
+                                            <button class="sns-filter-btn" data-platform="slack">Slack</button>
+                                        </nav>
+                                        <section class="app-chat-list-container">
+                                            <div class="list-header">
+                                                <h4>채팅방 리스트</h4>
+                                                <span>동기화 시간 11:37</span>
+                                            </div>
+                                            <!-- Kakao 채팅방 -->
+                                            <div class="app-chat-list active" data-platform="kakao">
+                                                <article class="app-chat-item">
+                                                    <img src="https://i.pravatar.cc/150?img=1" alt="김하윤 경제 24" class="app-profile-pic">
+                                                    <div class="app-chat-details">
+                                                        <div class="app-chat-header"><span>김하윤 경제 24</span><span>11:36</span></div>
+                                                        <p class="app-chat-preview">다음에 가면 너무 좋겠...</p>
+                                                        <p class="app-analysis-title">한줄 관계 분석: "서로의 대화 템포가 잘 맞아요"</p>
+                                                        <div class="app-chat-temp positive">🔥 긍정적 81% • 관계 온도 +3도</div>
+                                                        <div class="app-chat-tags"><span>#공감형</span><span>#활발한 대화</span></div>
+                                                        <a href="#" class="app-detail-link btn-analyze-chat">상세 분석 보기 &gt;</a>
+                                                    </div>
+                                                </article>
+                                                <article class="app-chat-item">
+                                                    <img src="https://i.pravatar.cc/150?img=2" alt="최영한 교수님" class="app-profile-pic">
+                                                    <div class="app-chat-details">
+                                                        <div class="app-chat-header"><span>최영한 교수님</span><span>11:35</span></div>
+                                                        <p class="app-chat-preview">어제 요청한 부분만 처리해주세...</p>
+                                                        <p class="app-analysis-title">한줄 관계 분석: "주로 업무와 관련된 대화가 많아요"</p>
+                                                        <div class="app-chat-temp neutral">💧 중립적 60% • 관계 온도 -1도</div>
+                                                        <div class="app-chat-tags"><span>#업무 중심</span><span>#간결함</span></div>
+                                                        <a href="#" class="app-detail-link">상세 분석 보기 &gt;</a>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                            <!-- Instagram 채팅방 -->
+                                            <div class="app-chat-list" data-platform="instagram">
+                                                <article class="app-chat-item">
+                                                    <img src="https://i.pravatar.cc/150?img=3" alt="맛집탐방 모임" class="app-profile-pic">
+                                                    <div class="app-chat-details">
+                                                        <div class="app-chat-header"><span>맛집탐방 모임 (5)</span><span>어제</span></div>
+                                                        <p class="app-chat-preview">여기 진짜 맛있어 보여요!</p>
+                                                        <p class="app-analysis-title">한줄 관계 분석: "친목 중심의 활발한 대화방입니다."</p>
+                                                        <div class="app-chat-temp positive">🔥 긍정적 92% • 관계 온도 +5도</div>
+                                                        <div class="app-chat-tags"><span>#친목</span><span>#정보공유</span></div>
+                                                        <a href="#" class="app-detail-link">상세 분석 보기 &gt;</a>
+                                                    </div>
+                                                </article>
+                                                 <article class="app-chat-item">
+                                                    <img src="https://i.pravatar.cc/150?img=4" alt="박서아" class="app-profile-pic">
+                                                    <div class="app-chat-details">
+                                                        <div class="app-chat-header"><span>박서아</span><span>2일 전</span></div>
+                                                        <p class="app-chat-preview">다음에 꼭 같이 가자~</p>
+                                                        <p class="app-analysis-title">한줄 관계 분석: "서로에게 우호적인 관계입니다."</p>
+                                                        <div class="app-chat-temp positive">🔥 긍정적 88% • 관계 온도 +2도</div>
+                                                        <div class="app-chat-tags"><span>#약속</span><span>#우호적</span></div>
+                                                        <a href="#" class="app-detail-link">상세 분석 보기 &gt;</a>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                            <!-- Slack 채팅방 -->
+                                            <div class="app-chat-list" data-platform="slack">
+                                                <article class="app-chat-item">
+                                                    <img src="https://i.pravatar.cc/150?img=5" alt="# general" class="app-profile-pic">
+                                                    <div class="app-chat-details">
+                                                        <div class="app-chat-header"><span># general</span><span>10:30</span></div>
+                                                        <p class="app-chat-preview">@channel 점심 식사 맛있게 하세요!</p>
+                                                        <p class="app-analysis-title">한줄 관계 분석: "주로 공지와 일상 공유가 이뤄집니다."</p>
+                                                        <div class="app-chat-temp neutral">💧 중립적 75% • 관계 온도 0도</div>
+                                                        <div class="app-chat-tags"><span>#공지</span><span>#일상</span></div>
+                                                        <a href="#" class="app-detail-link">상세 분석 보기 &gt;</a>
+                                                    </div>
+                                                </article>
+                                                <article class="app-chat-item">
+                                                    <img src="https://i.pravatar.cc/150?img=6" alt="# project-nmgm" class="app-profile-pic">
+                                                    <div class="app-chat-details">
+                                                        <div class="app-chat-header"><span># project-nmgm</span><span>09:55</span></div>
+                                                        <p class="app-chat-preview">API 명세서 업데이트했습니다.</p>
+                                                        <p class="app-analysis-title">한줄 관계 분석: "프로젝트 관련 정보 공유가 활발합니다."</p>
+                                                        <div class="app-chat-temp neutral">💧 중립적 80% • 관계 온도 +1도</div>
+                                                        <div class="app-chat-tags"><span>#프로젝트</span><span>#개발</span></div>
+                                                        <a href="#" class="app-detail-link">상세 분석 보기 &gt;</a>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </section>
+                                    </main>
+                                </div>
+                            </div>
+                            <!-- Screen 3: 보고서 -->
+                            <div class="app-screen" id="app-screen-3">
+                                 <div class="report-preview">
+                                     <section class="report-card">
+                                        <h2 class="card-title">AI 한줄 요약</h2>
+                                        <p class="card-text">김하윤님과의 대화에서 하윤님은 주로 대화를 리드하며 긍정적인 분위기를 만들어가고 있습니다.</p>
+                                    </section>
+                                    <section class="report-card">
+                                        <h2 class="card-title">상세 분석</h2>
+                                        <p class="card-text">대화 주도권은 6:4로 하윤님이 더 높으며, 특히 질문을 통해 상대방의 참여를 유도하는 경향이 보입니다. '좋아요', '고마워요'와 같은 긍정적 표현의 사용 빈도가 높아 안정적인 관계를 유지하고 있습니다.</p>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API 프로토타입 -->
+                <div id="api-prototype" class="prototype-content">
+                     <div class="chat-window">
+                        <div class="api-message opponent" id="msg1">
+                            <img src="https://i.pravatar.cc/150?img=7" class="avatar">
+                            <div class="bubble">혹시 내일 저녁에 시간 괜찮아?</div>
+                        </div>
+                        <div class="api-analysis-box" id="analysis1">
+                            <i data-lucide="search"></i>
+                            <span>상대방의 의도: **약속 제안** (긍정적)</span>
+                        </div>
+                        <div class="api-message user" id="msg2">
+                            <div class="bubble"></div>
+                        </div>
+                        <div class="api-analysis-box suggestion" id="analysis2">
+                            <i data-lucide="lightbulb"></i>
+                            <div class="suggestion-content">
+                                <strong>더 부드러운 표현 제안:</strong>
+                                <p>"음 내일은 좀 어려울 것 같은데, 혹시 다른 날은 어때?"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'js/prototype-script.js' %}"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+</html>
+
