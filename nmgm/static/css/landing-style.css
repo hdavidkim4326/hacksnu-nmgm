@@ -109,9 +109,9 @@ body {
 /* --- 히어로 섹션 --- */
 .hero-section {
     background-color: var(--primary-light);
-    padding-top: 100px; /* 헤더 높이 고려 */
-    padding-bottom: 200px; /* 보고서 섹션이 올라올 공간 확보 */
-    height: auto; /* 100vh 대신 auto로 변경 */
+    padding-top: 12vh; /* 헤더 높이 고려 */
+    padding-bottom: 20vh; /* 보고서 섹션이 올라올 공간 확보 */
+    height: 100vh; /* 100vh 대신 auto로 변경 */
 }
 .hero-container {
     display: flex;
@@ -162,7 +162,7 @@ body {
 /* --- 리포트 업로드 섹션 --- */
 .report-upload-section {
     padding: 0;
-    margin-top: -150px; /* Hero 섹션 위로 끌어올리기 */
+    margin-top: -15vh; /* Hero 섹션 위로 끌어올리기 */
     position: relative;
     z-index: 10;
 }
@@ -226,6 +226,20 @@ body {
     line-height: 1.6;
     color: var(--text-secondary);
 }
+.file-drop-zone,
+.file-drop-zone * {
+  user-select: none;  /* 텍스트 드래그 금지 */
+}
+
+.file-drop-zone {
+  cursor: pointer;  /* 마우스 올릴 때 클릭 모양 */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.file-drop-zone:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.01);
+}
 .file-drop-zone {
     flex: 2;
     border: 2px dashed rgba(255,255,255,0.3);
@@ -274,7 +288,71 @@ body {
     background-color: var(--text-light);
     color: var(--primary-dark);
 }
+.main-header .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
 
+/* ---------- Hero 버튼 인터랙션 업그레이드 ---------- */
+.hero-buttons .btn {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);               /* GPU 가속으로 부드럽게 */
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease;
+  will-change: transform, box-shadow;
+}
+
+/* 공통 hover: 살짝 떠오르고 그림자 */
+.hero-buttons .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+}
+
+/* 눌렀을 때 복귀 */
+.hero-buttons .btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+/* 키보드 접근성 */
+.hero-buttons .btn:focus-visible {
+  outline: 2px solid var(--primary-dark);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(46,79,33,.2);
+}
+
+/* 다크 버튼: 색만 살짝 어두워지게 */
+.hero-buttons .btn-dark:hover {
+  background-color: #24401a; /* var(--primary-dark)보다 8~10% 더 어둡게 */
+}
+
+/* 아웃라인 버튼: 호버 시 반전(배경 채우기) */
+.hero-buttons .btn-outline {
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.hero-buttons .btn-outline:hover {
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+}
+
+/* 화살표 아이콘 슬라이드 애니메이션 */
+.hero-buttons .arrow-icon {
+  display: inline-block;
+  transition: transform .2s ease, opacity .2s ease;
+  transform: translateX(0);
+}
+.hero-buttons .btn:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* 모션 최소화 설정을 존중 */
+@media (prefers-reduced-motion: reduce) {
+  .hero-buttons .btn,
+  .hero-buttons .arrow-icon {
+    transition: none;
+  }
+}
 
 /* --- 서비스 소개 섹션 --- */
 .features-section {
