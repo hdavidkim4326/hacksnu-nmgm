@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .models import Chatroom, User
 from .agents.agents import Loader, ChatroomReportAgent, UserReportAgent, MessageEditor
@@ -51,8 +51,7 @@ def generate_chatroom_report(request):
     report = ChatroomReportAgent(
         chatroom=chatroom, api_key=os.getenv("GEMINI_KEY")
     ).generate_report()
-    breakpoint()
-    return HttpResponse("Chatroom report generated")
+    return JsonResponse(report)
 
 
 def generate_user_report(request):
@@ -61,7 +60,7 @@ def generate_user_report(request):
     report = UserReportAgent(
         user=user, api_key=os.getenv("GEMINI_KEY")
     ).generate_report()
-    return HttpResponse("User report generated")
+    return JsonResponse(report)
 
 
 def suggest_message_edit(request):
@@ -73,3 +72,4 @@ def suggest_message_edit(request):
     ).suggest_message(
         user=user, chatroom=chatroom, message = "너 나 사랑하는 거 맞아?"
     )
+    return JsonResponse(next_message)
