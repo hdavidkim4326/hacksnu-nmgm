@@ -5,7 +5,6 @@ packaging==25.0
 pillow==11.3.0
 sqlparse==0.5.3
 tzdata==2025.2
-<<<<<<< HEAD
 django-environ==0.12.0
 djangorestframework==3.16.1
 pgvector==0.4.1
@@ -16,6 +15,4 @@ konlpy==0.6.0
 pandas==2.3.3
 google-genai==1.43.0
 emoji==2.15.0
-=======
 whitenoise==6.6.0
->>>>>>> 3dd8b20559b1cf4fb28fc32a7b00c1f326172efe

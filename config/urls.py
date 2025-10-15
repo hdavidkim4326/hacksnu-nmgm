@@ -16,13 +16,6 @@ Including another URLconf
 """
 
 from django.contrib import admin
-<<<<<<< HEAD
-from django.urls import path, include
-
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", include("nmgm.urls")),
-=======
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -30,7 +23,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', include('nmgm.urls')),
->>>>>>> 3dd8b20559b1cf4fb28fc32a7b00c1f326172efe
 ]
 
 if settings.DEBUG:
