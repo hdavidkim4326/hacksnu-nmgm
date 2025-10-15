@@ -53,7 +53,7 @@ class WarningType(str, Enum):
 
 # ======== USER REPORT ===========
 
-class PosTags(BaseModel):
+class PosTag(BaseModel):
     tag: str
     rate: float
 
@@ -134,7 +134,7 @@ class UserReport(BaseModel):
     chatroom_count: int
     thread_count: int
     emoji_avg: float
-    pos_tags: list[PosTags]
+    pos_tags: list[PosTag]
     word_counts: list[WordCount]
     avg_emotions: list[EmotionOutput]
     avg_indices: list[ConversationIndexOutput]

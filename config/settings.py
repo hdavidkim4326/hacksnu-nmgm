@@ -5,24 +5,14 @@ and Vercel production environments.
 """
 from pathlib import Path
 import environ
-<<<<<<< HEAD
 import os
 
-=======
->>>>>>> 4818c72b (feat. Initial DB settings)
 env = environ.Env()
 
 environ.Env.read_env(env_file=".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-<<<<<<< HEAD
-=======
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
->>>>>>> 4818c72b (feat. Initial DB settings)
 SECRET_KEY = 'django-insecure-t!%r)zhdm56%j5_)4bt)78ei!cwil8v-bu+jj@rk0!8+6j)@^a'
 
 # Vercel's 'VERCEL_ENV' variable is used to distinguish between environments.
@@ -79,7 +69,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-<<<<<<< HEAD
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": env("DB_HOST"),
@@ -87,15 +76,6 @@ DATABASES = {
         "USER": env("DB_USER"),
         "PASSWORD": env("DB_PASSWORD"),
         "PORT": env("DB_PORT"),
-=======
-    'default': {
-        'ENGINE': 'django.db.backends.postgres',
-        'HOST' : env('DB_HOST'),
-        'NAME' : env('DB_NAME'),
-        'USER' : env('DB_USER'),
-        'PASSWORD' : env('DB_PASSWORD'),
-        'PORT' : env('DB_ORT'),
->>>>>>> 4818c72b (feat. Initial DB settings)
     }
 }
 

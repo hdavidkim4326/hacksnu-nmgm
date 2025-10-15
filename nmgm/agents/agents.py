@@ -23,6 +23,8 @@ from collections import Counter
 
 from .types import (
     IsRelated,
+    PosTag,
+    WordCount,
     MsgMetadata,
     ThreadMetadata,
     NextMessageEdit,
@@ -31,7 +33,6 @@ from .types import (
     SentenceClarity,
     ChatSummary,
     UserAnalysis,
-    ChatWarning,
     ChatWarningCandidate,
     ThreadInfo,
     BriefMessageInfo
@@ -61,8 +62,10 @@ class ReportAgent(BaseAgent):
         super().__init__(api_key)
         if chatroom:
             self.chatroom = chatroom
+            self.user = None
         elif user:
             self.user = user
+            self.chatroom = None
         else:
             raise ValueError("Either user or chatroom must be provided")
     
@@ -334,16 +337,13 @@ class UserReportAgent(ReportAgent):
             round(initiative_count / thread_count, 2) if message_count else None
         )
         avg_msg_length = round(length_sum / message_count, 2) if message_count else None
-        pos_tags = (
+        pos_tags = [
             {
                 tagset[k]: round(v / message_count, 2)
-                for k, v in sorted(
+            } for k, v in sorted(
                     pos_tags.items(), key=lambda item: item[1], reverse=True
                 )
-            }
-            if message_count
-            else {}
-        )
+        ] if message_count else []
         emoji_avg = round(emoji_count / message_count, 2) if message_count else 0
 
         user_report = UserReport(username=self.user.name,
@@ -354,9 +354,7 @@ class UserReportAgent(ReportAgent):
                 chatroom_count=chatroom_count,
                 thread_count=thread_count,
                 emoji_avg=emoji_avg,
-                pos_tags=[
-                    {"tag": tag, "count": count} for tag, count in pos_tags.items()
-                ],
+                pos_tags=[{"tag":k, "rate":v} for d in pos_tags for k, v in d.items()],
                 word_counts=[
                     {"word": word, "count": count}
                     for word, count in frequently_used_words.most_common(20)
@@ -373,7 +371,7 @@ class UserReportAgent(ReportAgent):
                 summary="",
                 strengths=[],
                 weaknesses=[],
-                sentence_clarity=SentenceClarity.Average,
+                sentence_clarity=SentenceClarity.AVERAGE,
                 action_plans=[]
             )
         return user_report
@@ -383,7 +381,7 @@ class UserReportAgent(ReportAgent):
 
         result : UserReport = self.wrapper.generate(
             prompt = user_report_prompt.format(
-                metadtata=report.model_dump_json()
+                metadata=report.model_dump_json()
             ),
             model_name="gemini-2.5-pro",
             structure= UserReport,
