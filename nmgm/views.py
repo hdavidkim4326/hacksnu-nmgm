@@ -4,6 +4,9 @@ from .models import Chatroom, User
 from .logic import ChatroomProcessor
 from .agents import ChatroomReportAgent, UserReportAgent, NextMessageEditAgent
 import pandas as pd
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def landing_view(request):
     return render(request, 'nmgm/landing.html')
