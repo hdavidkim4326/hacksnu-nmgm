@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .env
 venv/
 .venv/
@@ -5,3 +6,6 @@ venv/
 __pycache__/
 *.pyc
 models/
+=======
+.env
+>>>>>>> 4818c72b (feat. Initial DB settings)
