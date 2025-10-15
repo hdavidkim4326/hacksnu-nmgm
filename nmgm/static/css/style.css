@@ -1,0 +1,457 @@
+/* nmgm/static/nmgm/css/style.css */
+
+/* --- 기본 & 초기화 --- */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #5F33E1;
+    --background-color: #EDE8FF;
+    --card-background: #F8F8FF;
+    --text-primary: #121212;
+    --text-secondary: #555555;
+    --text-tertiary: #888888;
+    --border-color: #E9ECEF;
+    --tag-background: #F1EEFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+.dashboard-container {
+    max-width: 480px; /* 모바일 화면 기준으로 최대 너비 설정 */
+    margin: 0 auto;
+    padding: 24px;
+    background-color: var(--card-background);
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* --- 헤더 --- */
+.dashboard-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 24px;
+    text-align: right;
+}
+.greeting {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+.user-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* --- 검색 바 --- */
+.search-bar {
+    position: relative;
+    margin-bottom: 24px;
+}
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+}
+.search-bar input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+}
+.search-bar input::placeholder {
+    color: var(--text-tertiary);
+}
+
+/* --- 대화 습관 리포트 카드 --- */
+.habit-report-card {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 24px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+}
+.report-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.report-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.feedback-section {
+    flex: 1;
+}
+.feedback-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    opacity: 0.8;
+}
+.feedback-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+.btn-detail {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* --- 감정 차트 (원형) --- */
+.emotion-section {
+    text-align: center;
+}
+.emotion-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+.emotion-chart {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(
+        #ffffff var(--value, 0deg), 
+        rgba(255, 255, 255, 0.3) var(--value, 0deg)
+    );
+    position: relative;
+    transform: rotate(-90deg); /* 시작점을 위로 */
+}
+/* 원형 차트 값 계산 (JS로도 가능하지만 CSS 변수 활용) */
+.emotion-chart { --value: calc(var(--value) * 3.6deg); }
+
+.emotion-chart::before {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+.emotion-label, .emotion-score {
+    position: relative;
+    transform: rotate(90deg); /* 텍스트는 원래대로 */
+    display: block;
+}
+.emotion-label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+.emotion-score {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+/* --- SNS 필터 --- */
+.sns-filter {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.filter-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #EDE8FF;
+    color: #5F33E1;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.2s ease-in-out;
+}
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- 채팅방 리스트 --- */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.list-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+.sync-info {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+}
+.btn-sync {
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+}
+/* --- 채팅 아이템 (수정) --- */
+.chat-item {
+    background-color: var(--card-background); /* 카드 배경 흰색(#ffffff) 적용 */
+    padding: 16px; /* 카드 내부 여백 */
+    border-radius: 12px; /* 카드 모서리 둥글게 */
+    margin-bottom: 16px; /* 카드 사이의 간격 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 은은한 그림자 효과 */
+    border-bottom: none; /* 기존 구분선 제거 */
+}
+.chat-item:last-child {
+    margin-bottom: 0;
+}
+
+/* DIV 1: 이미지와 기본 정보 */
+.chat-main-info {
+    display: flex;
+    align-items: flex-start; /* 이미지가 텍스트보다 길 경우를 대비 */
+    gap: 16px;
+    margin-bottom: 16px; /* 분석 섹션과 여백 */
+}
+.profile-pic {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #eee;
+}
+.chat-text-info {
+    flex: 1; /* 남은 공간을 모두 차지 */
+}
+.chat-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.chat-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+.chat-time {
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+.chat-preview {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* DIV 2: 분석 정보 */
+.chat-analysis-summary {
+    /* 이 div는 자동으로 chat-main-info 아래에 위치합니다. */
+    /* 좌측 정렬을 위해 profile-pic 너비 + gap 만큼 왼쪽 여백을 줍니다 */
+    padding-left: 10px;
+}
+.summary-title {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+}
+.summary-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+.keywords-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.keywords-title {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+}
+.keywords {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.keyword-tag {
+    background-color: var(--tag-background);
+    color: var(--primary-color);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.chat-detail-link {
+    display: block;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* 기존 no-chats 스타일은 그대로 유지 */
+.no-chats {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-tertiary);
+}
+
+
+/* =================================== */
+/* 리포트 페이지 스타일          */
+/* =================================== */
+
+.report-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #F5F3FF 0%, #FEFDF7 100%);
+    min-height: 100vh;
+    padding: 24px;
+    padding-bottom: 120px; /* 하단 고정 버튼 공간 확보 */
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.report-page-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.report-card {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+}
+
+.card-subtitle {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.card-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* Accordion 카드 스타일 */
+.accordion-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.card-icon-wrapper {
+    background-color: #FFEBF0;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    margin-right: 16px;
+}
+.card-icon {
+    font-size: 24px;
+}
+.card-title-group {
+    flex-grow: 1;
+}
+.chevron-icon {
+    font-size: 18px;
+    transition: transform 0.3s ease-in-out;
+}
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* Accordion 활성화 스타일 */
+.accordion-card.active .chevron-icon {
+    transform: rotate(180deg);
+}
+.accordion-card.active .accordion-content {
+    max-height: 200px; /* 충분한 높이 */
+    margin-top: 20px;
+}
+
+/* 하단 고정 버튼 */
+.report-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 16px 24px 32px 24px;
+    background-color: var(--card-background);
+    /* border-top: 1px solid var(--border-color); (기존 선 제거) */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05); /* 위쪽으로 은은한 그림자 추가 */
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}

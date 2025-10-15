@@ -1,3 +1,5 @@
+# nmgm/models.py
+
 from django.db import models
 from pgvector.django import VectorField
 from datetime import datetime

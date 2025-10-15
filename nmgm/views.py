@@ -1,17 +1,17 @@
-from os import name
 from django.http import HttpResponse
-from .models import User, Chatroom
+from django.shortcuts import render
+from .models import Chatroom, User
 from .logic import ChatroomProcessor
-import pandas as pd
 from .agents import ChatroomReportAgent, UserReportAgent, NextMessageEditAgent
-import os
-from dotenv import load_dotenv
+import pandas as pd
 
-load_dotenv()
+def landing_view(request):
+    return render(request, 'nmgm/landing.html')
 
-
-def home(request):
-    return HttpResponse("Hello, NMGM!")
+def prototype_view(request):
+    return render(request, 'nmgm/prototype.html')
+def report_view(request):
+    return render(request, 'nmgm/report.html')
 
 
 def import_data(request):
