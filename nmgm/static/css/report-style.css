@@ -1,0 +1,122 @@
+/* report.html 전용 스타일 */
+.report-main {
+    padding-top: 120px;
+    padding-bottom: 100px;
+    background-color: #f8f9fa;
+}
+
+#report-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.report-section {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.section-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+/* 대화 요약 */
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 32px;
+}
+.summary-text p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+.summary-threads h4 {
+    margin-bottom: 16px;
+    font-size: 18px;
+}
+.thread-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    margin-bottom: 8px;
+}
+.thread-item-topic { flex: 2; font-weight: 700; }
+.thread-item-type { flex: 1; color: var(--text-secondary); }
+.thread-item-count { flex: 1; }
+
+/* 유저 분석 */
+.user-analysis-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+.user-card h4 {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+.user-card .personality {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
+}
+.user-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+.user-stats { display: flex; gap: 24px; margin-bottom: 24px; }
+.stat-item { text-align: center; }
+.stat-item .label { font-size: 14px; color: var(--text-secondary); }
+.stat-item .value { font-size: 20px; font-weight: 700; }
+
+/* 레이더 차트 */
+.radar-chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 경고 분석 */
+.warnings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.warnings-table th, .warnings-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+.warnings-table th { font-weight: 700; }
+.warning-type { font-weight: 700; }
+.action-plan { font-style: italic; color: var(--primary-dark); }
+
+.loading-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary-dark);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 100px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
