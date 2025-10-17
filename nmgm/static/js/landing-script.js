@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // 파일 업로드 및 리포트 페이지로 이동
+        // 파일 업로드 및 리포트 페이지로 이동 (이 블록 전체를 교체하세요)
         startAnalysisBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             if (!selectedFile) {
@@ -103,10 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('file', selectedFile);
 
             try {
-                // --- ✨ 여기가 핵심 수정 부분입니다 ---
-
-                // ① CSV 파일 업로드 요청 후, 서버가 분석한 JSON 결과를 바로 받습니다.
-                const response = await fetch('/import_data/', { // Django urls.py에 설정된 URL
+                // ① CSV 파일 업로드 후, 서버가 분석한 JSON 결과를 바로 받습니다.
+                const response = await fetch('/import_data/', {
                     method: 'POST',
                     body: formData,
                 });
@@ -123,12 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // ③ 받은 데이터를 브라우저 임시 저장소(localStorage)에 저장합니다.
                 localStorage.setItem('reportData', JSON.stringify(reportData));
 
-                // ④ 데이터 저장이 끝나면, URL 파라미터 없이 깔끔하게 리포트 페이지로 이동합니다.
+                // ④ 데이터 저장이 끝나면, URL 파라미터 없이 리포트 페이지로 이동합니다.
                 window.location.href = startAnalysisBtn.dataset.reportUrl;
 
             } catch (error) {
                 console.error('Error:', error);
-                // 사용자에게 더 친절한 에러 메시지를 보여줍니다.
                 alert(`분석 중 오류가 발생했습니다: ${error.message}`);
                 startAnalysisBtn.textContent = 'AI 분석 시작하기 →';
                 startAnalysisBtn.disabled = false;
