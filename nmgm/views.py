@@ -22,10 +22,7 @@ def report_view(request):
 @csrf_exempt
 def import_data(request):
     # 파일 업로드 요청은 반드시 POST 방식이어야 합니다.
-    if request.method != "POST" or not request.FILES.get("file"):
-        return JsonResponse({"error": "Invalid request. A file must be POSTed."}, status=400)
-
-    try:
+    if request.method == "POST" and request.FILES.get("file"):
         uploaded_file = request.FILES["file"]
         
         # [핵심 수정 1] 파일을 디스크에 저장하지 않고, 메모리에서 직접 pandas로 읽습니다.
@@ -48,26 +45,6 @@ def import_data(request):
     chatroom_processor.load_chatroom()
     chatroom.save()
     return HttpResponse("Chatroom created")
-        
-        # 3. Chatroom 객체를 가져오거나 새로 생성
-        chatroom, is_new = Chatroom.objects.get_or_create(name=filepath)
-        
-        # 4. 새로운 파일일 경우에만 DB에 메시지 데이터 로드
-        if is_new:
-            chatroom.load(dataframe) # models.py의 load 함수가 DB에 데이터를 저장
-        
-        # 5. (선택) AI 에이전트를 통한 추가 처리
-        # ... (이하 생략) ...
-        
-        return HttpResponse(f"File '{uploaded_file.name}' processed in-memory and chatroom created/updated successfully.", status=200)
-
-    except Exception as e:
-        # 오류 발생 시, Supabase 로그에서 이 메시지를 확인하세요!
-        print(f"CRITICAL Error in import_data: {e}")
-        return JsonResponse({"error": str(e)}, status=500)
-
-# ... 나머지 함수들은 그대로 ...
-
 
 
 def clear_threads(request):
