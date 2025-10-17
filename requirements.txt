@@ -34,15 +34,6 @@ defusedxml==0.7.1
 deprecation==2.1.0
 distlib==0.3.9
 Django==5.2.7
-<<<<<<< HEAD
-=======
-gunicorn==23.0.0
-packaging==25.0
-pillow==11.3.0
-sqlparse==0.5.3
-tzdata==2025.2
-django-environ==0.12.0
->>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
 djangorestframework==3.16.1
 dulwich==0.22.8
 environs==14.3.0
@@ -153,7 +144,6 @@ proto-plus==1.26.1
 protobuf==5.29.5
 psutil==6.1.1
 psycopg2-binary==2.9.10
-<<<<<<< HEAD
 ptyprocess==0.7.0
 pure_eval==0.2.3
 pyasn1==0.6.1
@@ -236,12 +226,3 @@ widgetsnbextension==4.0.13
 xattr==1.1.4
 yarl==1.19.0
 zstandard==0.23.0
-=======
-transformers==4.57.0
-sentence-transformers==5.1.1
-konlpy==0.6.0
-pandas==2.3.3
-google-genai==1.43.0
-emoji==2.15.0
-whitenoise==6.6.0
->>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
