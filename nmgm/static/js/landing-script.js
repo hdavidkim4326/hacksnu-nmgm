@@ -96,28 +96,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            startAnalysisBtn.textContent = '업로드 중...';
+            startAnalysisBtn.textContent = 'AI 분석 중...';
             startAnalysisBtn.disabled = true;
 
             const formData = new FormData();
             formData.append('file', selectedFile);
 
             try {
-                // ① CSV 파일 업로드
-                const uploadResponse = await fetch('/import_data/', {
+                // --- ✨ 여기가 핵심 수정 부분입니다 ---
+
+                // ① CSV 파일 업로드 요청 후, 서버가 분석한 JSON 결과를 바로 받습니다.
+                const response = await fetch('/import_data/', { // Django urls.py에 설정된 URL
                     method: 'POST',
                     body: formData,
                 });
-                if (!uploadResponse.ok) throw new Error('업로드 실패');
-                
-                // ② 파일 이름을 파라미터로 하여 리포트 페이지로 이동
-                const reportUrl = new URL(startAnalysisBtn.dataset.reportUrl, window.location.origin);
-                reportUrl.searchParams.set('filepath', selectedFile.name);
-                window.location.href = reportUrl.href;
+
+                // 서버에서 에러가 발생하면, 에러 메시지를 포함하여 예외를 발생시킵니다.
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || '서버에서 리포트를 생성하는데 실패했습니다.');
+                }
+
+                // ② 응답으로 받은 JSON 데이터를 reportData 변수에 저장합니다.
+                const reportData = await response.json();
+
+                // ③ 받은 데이터를 브라우저 임시 저장소(localStorage)에 저장합니다.
+                localStorage.setItem('reportData', JSON.stringify(reportData));
+
+                // ④ 데이터 저장이 끝나면, URL 파라미터 없이 깔끔하게 리포트 페이지로 이동합니다.
+                window.location.href = startAnalysisBtn.dataset.reportUrl;
 
             } catch (error) {
                 console.error('Error:', error);
-                alert('분석 중 오류가 발생했습니다.');
+                // 사용자에게 더 친절한 에러 메시지를 보여줍니다.
+                alert(`분석 중 오류가 발생했습니다: ${error.message}`);
                 startAnalysisBtn.textContent = 'AI 분석 시작하기 →';
                 startAnalysisBtn.disabled = false;
             }
@@ -149,35 +161,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // reportContainer가 있는 페이지에서만 아래 코드 실행
     if (reportContainer) {
         // 페이지 로드 시 즉시 실행되는 async 함수
+        // landing-script.js 의 (async function loadReport() { ... }) 부분을 교체하세요.
+
         (async function loadReport() {
             try {
-                reportContainer.innerHTML = '<p class="loading-message">📊 AI가 리포트를 생성하는 중입니다... 잠시만 기다려주세요.</p>';
-                
-                const urlParams = new URLSearchParams(window.location.search);
-                const filepath = urlParams.get('filepath');
+                // ① localStorage에서 'reportData'를 가져옵니다.
+                const storedData = localStorage.getItem('reportData');
 
-                if (!filepath) {
-                    throw new Error('분석할 파일 정보가 없습니다. 랜딩 페이지에서 파일을 업로드해주세요.');
-                }
-                
-                const response = await fetch(`/generate_chatroom_report/?filepath=${filepath}`);
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`서버 응답 오류: ${errorText}`);
+                if (!storedData) {
+                    throw new Error('분석 데이터가 없습니다. 랜딩 페이지에서 파일을 먼저 업로드해주세요.');
                 }
 
-                const reportData = await response.json();
-
-                // ---- 렌더링 실행 ----
+                // ② 가져온 데이터를 JSON 객체로 변환합니다.
+                const reportData = JSON.parse(storedData);
+                
+                // 로딩 메시지를 실제 리포트로 교체합니다.
                 reportContainer.innerHTML = `
                     ${renderChatSummary(reportData.chat_summary)}
                     ${renderUserAnalysis(reportData.user_analysis)}
                     ${renderWarnings(reportData.warnings)}
                 `;
 
-                // ---- 차트 생성 ----
+                // 차트를 생성합니다.
                 createSentimentCharts(reportData.user_analysis);
                 createRadarChart(reportData.user_analysis);
+
+                // (중요) 사용한 데이터는 localStorage에서 삭제하여,
+                // 새로고침 시 빈 페이지가 보이도록 합니다.
+                localStorage.removeItem('reportData');
 
             } catch (error) {
                 console.error(error);
