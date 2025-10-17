@@ -102,25 +102,25 @@ class Loader(BaseAgent):
     def __init__ (self, api_key: str, chatroom: Chatroom):
         super().__init__(api_key)
         self.chatroom = chatroom
-        self.embedding_model = SentenceTransformer(
-            "upskyy/bge-m3-korean", cache_folder="./models/bge-m3"
-        )
+        # self.embedding_model = SentenceTransformer(
+        #     "upskyy/bge-m3-korean", cache_folder="./models/bge-m3"
+        # )
         # self.konlp = Okt()
     
     def load_chatroom(self):
-        self.embed_all_messages()
+        # self.embed_all_messages()
         self.assign_threads()
         self.generate_message_metadata()
         self.generate_thread_metadata()
     
-    def embed_all_messages(self):
-        messages = Message.objects.filter(room=self.chatroom, embedding__isnull=True)
-        embeddings = self.embedding_model.encode(
-            [msg.content for msg in messages], batch_size=32, show_progress_bar=True
-        )
-        for msg, emb in zip(messages, embeddings):
-            msg.embedding = emb
-            msg.save()
+    # def embed_all_messages(self):
+    #     messages = Message.objects.filter(room=self.chatroom, embedding__isnull=True)
+    #     embeddings = self.embedding_model.encode(
+    #         [msg.content for msg in messages], batch_size=32, show_progress_bar=True
+    #     )
+    #     for msg, emb in zip(messages, embeddings):
+    #         msg.embedding = emb
+    #         msg.save()
     
     def assign_threads(self):
         untagged_messages = Message.objects.filter(

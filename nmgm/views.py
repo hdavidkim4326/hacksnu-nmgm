@@ -20,6 +20,7 @@ def report_view(request):
 
 @csrf_exempt
 def import_data(request):
+    breakpoint()
     if request.method == "POST" and request.FILES.get("file"):
         uploaded_file = request.FILES["file"]
         filepath = os.path.join("chats", uploaded_file.name)
@@ -28,7 +29,6 @@ def import_data(request):
                 destination.write(chunk)
     else:
         filepath = "chats/" + request.GET.get("filepath")
-    breakpoint()
     dataframe = pd.read_csv(filepath)
     chatroom, is_new = Chatroom.objects.get_or_create(name=filepath)
     if is_new:
