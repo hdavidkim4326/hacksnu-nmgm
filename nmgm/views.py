@@ -31,12 +31,12 @@ def import_data(request):
         dataframe = pd.read_csv(uploaded_file)
         filepath = uploaded_file.name
         
-        chatroom = Chatroom.objects.filter(name=filepath)[0]
+        chatroom, is_new = Chatroom.objects.get_or_create(name=filepath)
         
-        # chatroom, is_new = Chatroom.objects.get_or_create(name=filepath)
-        
-        if False:
+        if is_new:
             chatroom.load(dataframe)
+
+        Loader(api_key=os.getenv("GEMINI_KEY"), chatroom=chatroom).load_chatroom()
         
         # --- 여기가 핵심 수정 부분 ---
         # 파일 처리 후, 바로 리포트 에이전트를 호출하여 리포트를 생성합니다.
@@ -81,7 +81,7 @@ def generate_chatroom_report(request):
         chatroom=chatroom, api_key=os.getenv("GEMINI_KEY")
     ).generate_report()
     #breakpoint()
-    return JsonResponse(report)
+    return JsonResponse(report, safe=False)
 
 
 def generate_user_report(request):
@@ -103,13 +103,3 @@ def suggest_message_edit(request):
         user=user, chatroom=chatroom, message = "너 나 사랑하는 거 맞아?"
     )
     return JsonResponse(next_message)
-
-
-def generate_chatroom_report(request):
-
-    filepath = "chats/" + request.GET.get("filepath", "chat_01.csv")
-    chatroom = Chatroom.objects.get(name=filepath)
-    report = ChatroomReportAgent(
-        chatroom=chatroom, api_key=os.getenv("GEMINI_KEY")
-    ).generate_report()
-    return JsonResponse(report)
