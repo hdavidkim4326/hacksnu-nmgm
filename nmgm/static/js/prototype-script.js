@@ -1,117 +1,128 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const toggleButtons = document.querySelectorAll('.toggle-btn');
-    const prototypeContents = document.querySelectorAll('.prototype-content');
-    const description = document.getElementById('prototype-description');
+    // 1. 스크롤 시 헤더에 그림자 효과 추가
+    const header = document.querySelector('.main-header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+    }
 
-    const descriptions = {
-        'app-prototype': 'NMgM 어플의 구조를 직접 경험해보세요! 앱에서는 실제 대화를 기반으로 한 관계 리포트를 동시에 받아볼 수 있습니다. AI가 당신의 말투와 감성을 이해하고, 더 따뜻하고 명확한 대화를 돕습니다.',
-        'api-prototype': 'API 프로토타입은 AI가 실시간으로 대화를 이해하고 코칭하는 과정을 보여줍니다. 실제 앱에서는 키보드 API와 연동되어 작동하게 됩니다.'
-    };
-    
-    // --- 토글 기능 ---
-    toggleButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.dataset.target;
-
-            toggleButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            description.textContent = descriptions[targetId];
-
-            prototypeContents.forEach(content => {
-                content.id === targetId ? content.classList.add('active') : content.classList.remove('active');
-            });
-            
-            if (targetId === 'api-prototype') {
-                startApiAnimation();
+    // 2. 네비게이션 부드러운 스크롤
+    const navLinks = document.querySelectorAll('.main-nav a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offset = target.getBoundingClientRect().top + window.pageYOffset - header.offsetHeight;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
             }
         });
     });
 
-    // --- 1. NMGm 어플 프로토타입 기능 ---
-    const btnStartDemo = document.getElementById('btn-start-demo');
-    const btnAnalyzeChat = document.querySelector('.btn-analyze-chat');
-    const appScreens = document.querySelectorAll('.app-screen');
-    const snsFilterBtns = document.querySelectorAll('.sns-filter-btn');
-    const chatLists = document.querySelectorAll('.app-chat-list');
+    // 3. 파일 드래그 & 드롭
+    const dropZone = document.querySelector('.file-drop-zone');
+    const fileInput = document.getElementById('chat-file-input');
+    const startAnalysisBtn = document.getElementById('start-analysis-btn');
+    let selectedFile = null;
 
-    function switchScreen(targetScreenId) {
-        appScreens.forEach(screen => {
-            screen.id === targetScreenId ? screen.classList.add('active') : screen.classList.remove('active');
+    function handleFileSelect(file) {
+        if (!file) return;
+        selectedFile = file;
+        dropZone.querySelector('p').textContent = `선택된 파일: ${file.name}`;
+        dropZone.style.borderColor = 'var(--primary-light)';
+        startAnalysisBtn.disabled = false;
+    }
+
+    if (dropZone) {
+        dropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'rgba(255,255,255,0.1)';
+        });
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = 'transparent';
+        });
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'transparent';
+            if (e.dataTransfer.files.length > 0) {
+                handleFileSelect(e.dataTransfer.files[0]);
+            }
         });
     }
 
-    if (btnStartDemo) {
-        btnStartDemo.addEventListener('click', () => switchScreen('app-screen-2'));
+    if (fileInput) {
+        fileInput.addEventListener('change', e => {
+            if (e.target.files.length > 0) handleFileSelect(e.target.files[0]);
+        });
     }
-    if (btnAnalyzeChat) {
-        btnAnalyzeChat.addEventListener('click', () => switchScreen('app-screen-3'));
+
+    // 4. 파일 업로드 및 분석 요청
+    if (startAnalysisBtn) {
+        startAnalysisBtn.addEventListener('click', async () => {
+            if (!selectedFile) {
+                alert('분석할 파일을 선택해주세요.');
+                return;
+            }
+
+            startAnalysisBtn.textContent = '분석 중...';
+            startAnalysisBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                // ① CSV 파일 업로드
+                const uploadResponse = await fetch('/import_data/', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (!uploadResponse.ok) throw new Error('업로드 실패');
+
+                // ② 리포트 생성 요청
+                const reportResponse = await fetch(`/generate_chatroom_report/?filepath=${selectedFile.name}`);
+                if (!reportResponse.ok) throw new Error('리포트 생성 실패');
+
+                const reportData = await reportResponse.json();
+
+                // ③ 데이터 저장 후 리포트 페이지로 이동
+                localStorage.setItem('reportData', JSON.stringify(reportData));
+                window.location.href = startAnalysisBtn.dataset.reportUrl;
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('분석 중 오류가 발생했습니다.');
+            } finally {
+                startAnalysisBtn.textContent = 'AI 분석 시작하기 →';
+                startAnalysisBtn.disabled = false;
+            }
+        });
     }
-    
-    // SNS 필터 탭 기능
-    snsFilterBtns.forEach(button => {
-        button.addEventListener('click', () => {
-            const platform = button.dataset.platform;
 
-            snsFilterBtns.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+    // 5. 섹션 페이드인 애니메이션
+    const sections = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
 
-            chatLists.forEach(list => {
-                list.dataset.platform === platform ? list.classList.add('active') : list.classList.remove('active');
-            });
+    // 6. 기술 소개 탭
+    const techMenuItems = document.querySelectorAll('.tech-menu-item');
+    const techContents = document.querySelectorAll('.tech-content');
+    techMenuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const tabId = item.getAttribute('data-tab');
+            techMenuItems.forEach(menu => menu.classList.remove('active'));
+            techContents.forEach(content => content.classList.remove('active'));
+            item.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
         });
     });
-
-
-    // --- 2. API 프로토타입 기능 ---
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-    let isApiAnimating = false;
-
-    async function startApiAnimation() {
-        if (isApiAnimating) return;
-        isApiAnimating = true;
-
-        const elements = {
-            msg1: document.getElementById('msg1'),
-            analysis1: document.getElementById('analysis1'),
-            msg2Bubble: document.getElementById('msg2').querySelector('.bubble'),
-            msg2Container: document.getElementById('msg2'),
-            analysis2: document.getElementById('analysis2'),
-        };
-
-        Object.values(elements).forEach(el => el.classList.remove('visible'));
-        elements.msg2Bubble.textContent = '';
-
-        await sleep(1000);
-        elements.msg1.classList.add('visible');
-
-        await sleep(1500);
-        elements.analysis1.classList.add('visible');
-
-        await sleep(1500);
-        elements.msg2Container.classList.add('visible');
-        await typeMessage(elements.msg2Bubble, "내일은 좀 그런데");
-
-        await sleep(1000);
-        elements.analysis2.classList.add('visible');
-        
-        isApiAnimating = false;
-    }
-
-    function typeMessage(element, text) {
-        return new Promise(resolve => {
-            let index = 0;
-            element.textContent = '';
-            const interval = setInterval(() => {
-                if (index < text.length) {
-                    element.textContent += text.charAt(index);
-                    index++;
-                } else {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, 100);
-        });
-    }
 });

@@ -33,7 +33,7 @@
             </div>
 
             <div class="toggle-buttons">
-                <button class="toggle-btn active" data-target="app-prototype">NMgM 어플 프로토타입</button>
+                <button class="toggle-btn active" data-target="app-prototype">앱 프로토타입</button>
                 <button class="toggle-btn" data-target="api-prototype">API 프로토타입</button>
             </div>
 
@@ -173,6 +173,10 @@
                             <!-- Screen 3: 보고서 -->
                             <div class="app-screen" id="app-screen-3">
                                  <div class="report-preview">
+                                     <div class="report-header">
+                                         <button class="btn-back" id="btn-back-to-list"><i data-lucide="arrow-left"></i></button>
+                                         <h4>분석 보고서</h4>
+                                     </div>
                                      <section class="report-card">
                                         <h2 class="card-title">AI 한줄 요약</h2>
                                         <p class="card-text">김하윤님과의 대화에서 하윤님은 주로 대화를 리드하며 긍정적인 분위기를 만들어가고 있습니다.</p>
@@ -183,30 +187,26 @@
                                     </section>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
 
                 <!-- API 프로토타입 -->
                 <div id="api-prototype" class="prototype-content">
-                     <div class="chat-window">
-                        <div class="api-message opponent" id="msg1">
-                            <img src="https://i.pravatar.cc/150?img=7" class="avatar">
-                            <div class="bubble">혹시 내일 저녁에 시간 괜찮아?</div>
-                        </div>
-                        <div class="api-analysis-box" id="analysis1">
-                            <i data-lucide="search"></i>
-                            <span>상대방의 의도: **약속 제안** (긍정적)</span>
-                        </div>
-                        <div class="api-message user" id="msg2">
-                            <div class="bubble"></div>
-                        </div>
-                        <div class="api-analysis-box suggestion" id="analysis2">
-                            <i data-lucide="lightbulb"></i>
-                            <div class="suggestion-content">
-                                <strong>더 부드러운 표현 제안:</strong>
-                                <p>"음 내일은 좀 어려울 것 같은데, 혹시 다른 날은 어때?"</p>
+                    <div class="keyboard-prototype-container">
+                        <div class="chat-history">
+                            <div class="api-message opponent" id="msg1">
+                                <img src="https://i.pravatar.cc/150?img=7" class="avatar">
+                                <div class="bubble">혹시 내일 저녁에 시간 괜찮아?</div>
                             </div>
+                            <div class="api-message user" id="msg2">
+                                <div class="bubble"></div>
+                            </div>
+                        </div>
+                        <div class="ai-suggestion-bar" id="ai-bar">
+                            <!-- AI 코칭 내용이 여기에 동적으로 표시됩니다 -->
+                        </div>
+                        <div class="keyboard-area">
+                            <img src="{% static 'images/keyboard.svg' %}" alt="Keyboard UI" class="keyboard-svg">
                         </div>
                     </div>
                 </div>
