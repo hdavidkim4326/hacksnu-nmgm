@@ -2,7 +2,7 @@ from .wrappers import GoogleWrapper
 from konlpy.tag import Kkma
 from django.db.models import QuerySet
 from nmgm.models import Message, Thread
-from datetime import timedelta
+from datetime import datetime, timedelta
 from tqdm import tqdm
 import re
 from dotenv import load_dotenv
@@ -80,7 +80,7 @@ class ReportAgent(BaseAgent):
             Message.objects.filter(
                 thread=message.thread, sent_time__lt=message.sent_time
             )
-            .exclude(user_id=self.user.id)
+            .exclude(user_id=message.user_id)
             .order_by("-sent_time")
             .first()
         )
@@ -405,7 +405,7 @@ class ChatroomReportAgent(ReportAgent):
     def generate_data(self) -> ChatroomReport:
         chat_summary = self.get_chat_summary()
         user_analyses = [self.get_user_analysis(user) for user in self.get_all_users()]
-        warning_candidates = self.get_warnings()
+        warning_candidates = self.get_warnings(self.get_all_msg_log(), user_analyses)
         chat_report = ChatroomReport(
             chatsummary=chat_summary,
             user_analysis=user_analyses,
@@ -417,8 +417,8 @@ class ChatroomReportAgent(ReportAgent):
         report, warning_candidates = self.generate_data()
         result : ChatroomReport = self.wrapper.generate(
             prompt = chatroom_report_prompt.format(
-                metadtata=report.model_dump_json(),
-                warning_candidates = [wc.model_dump() for wc in warning_candidates]
+                metadata=report.model_dump_json(),
+                candidates = [wc.model_dump() for wc in warning_candidates]
             ),
             model_name="gemini-2.5-pro",
             structure= ChatroomReport,
@@ -448,8 +448,8 @@ class ChatroomReportAgent(ReportAgent):
 
         return ChatSummary(
             summary=summary,
-            start_time=start_time.fromisoformat() if start_time else None,
-            end_time=end_time.fromisoformat() if end_time else None,
+            start_time=datetime.fromisoformat(start_time) if start_time else None,
+            end_time=datetime.fromisoformat(end_time) if end_time else None,
             threads=[
                 self.summarize_thread_info(thread)
                 for thread in threads
@@ -490,7 +490,7 @@ class ChatroomReportAgent(ReportAgent):
             duration=round(duration, 2),
         )
     
-    def get_user_analyses(self, user: User) -> UserAnalysis:
+    def get_user_analysis(self, user: User) -> UserAnalysis:
         username = user.name
         personality = user.metadata.get("personality") if user.metadata else None
         messages = Message.objects.filter(room=self.chatroom, user_id=user.id).order_by("sent_time")
@@ -587,7 +587,7 @@ class ChatroomReportAgent(ReportAgent):
     ) -> list[ChatWarningCandidate]:
         warnings = []
         user_to_median_response = {
-            user.user_id: user.median_response_time
+            user.username: user.median_response_time
             for user in users
             if user.median_response_time is not None
         }
@@ -622,7 +622,7 @@ class ChatroomReportAgent(ReportAgent):
                 warnings.append(
                     ChatWarningCandidate(
                         message=msg.content,
-                        user_id=msg.user.id,
+                        user_id=msg.user_id,
                         sent_time=msg.sent_time,
                         response_delay=response_delay,
                         emotion_vector=emotion_vector,
