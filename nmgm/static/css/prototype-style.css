@@ -29,10 +29,6 @@
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    white-space: nowrap;   /* ✅ 한 줄로 강제 표시 */
-    overflow: hidden;      /* ✅ 혹시 넘치면 숨김 */
-    text-overflow: ellipsis;
-    min-width: 150px;
 }
 
 .toggle-btn.active {
@@ -95,26 +91,29 @@
 .app-screen {
     display: none;
     animation: fadeIn 0.5s ease-in-out;
+    height: 100%;
 }
 .app-screen.active {
     display: block;
 }
 
-/* Screen 1: 로그인 화면 */
+/* Screen 1: 로그인 화면 (수정) */
 .login-screen-content {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: #4F46E5;
-    color: #fff;
+    background-color: #FFFFFF;
+    color: var(--text-dark);
     padding: 20px;
     text-align: center;
 }
 .login-header {
+    flex-shrink: 0;
     text-align: left;
     font-size: 18px;
     font-weight: 700;
     padding: 10px;
+    color: var(--primary-dark);
 }
 .login-main {
     flex-grow: 1;
@@ -127,19 +126,21 @@
     font-weight: 900;
     line-height: 1.2;
     margin-bottom: 16px;
+    color: var(--primary-dark);
 }
 .login-subtitle {
     font-size: 16px;
-    opacity: 0.8;
+    color: var(--text-secondary);
 }
 .login-footer {
+    flex-shrink: 0;
     padding-bottom: 20px;
 }
 .btn-demo-login {
     width: 100%;
     padding: 16px;
-    background-color: #fff;
-    color: #4F46E5;
+    background-color: var(--primary-dark);
+    color: #fff;
     border: none;
     border-radius: 12px;
     font-size: 16px;
@@ -149,54 +150,33 @@
 }
 .signup-link {
     font-size: 14px;
-    opacity: 0.7;
+    color: var(--text-secondary);
 }
 
-/* Screen 2: 앱 대시보드 */
-.app-dashboard-container {
-    padding: 20px;
-    font-family: 'Pretendard', sans-serif;
-}
-.app-header {
-    display: flex; justify-content: space-between; align-items: center; text-align: right; margin-bottom: 16px;
-}
+/* Screen 2: 앱 대시보드 (기존과 거의 동일, 일부만 유지) */
+.app-dashboard-container { padding: 20px; font-family: 'Pretendard', sans-serif; }
+.app-header { display: flex; justify-content: space-between; align-items: center; text-align: right; margin-bottom: 16px; }
 .app-logo { font-size: 20px; font-weight: 900; color: var(--primary-dark); }
 .app-greeting { font-size: 12px; color: #888; }
 .app-user-name { font-size: 16px; font-weight: 700; }
-.app-search-bar input {
-    width: 100%; padding: 12px 16px; border: 1px solid #eee; border-radius: 12px; font-size: 14px; margin-bottom: 16px;
-}
-.app-habit-card {
-    border: 1px solid var(--primary-light); background-color: #F8F9F7; border-radius: 16px; padding: 16px; display: flex; gap: 16px; align-items: center; margin-bottom: 24px;
-}
+.app-search-bar input { width: 100%; padding: 12px 16px; border: 1px solid #eee; border-radius: 12px; font-size: 14px; margin-bottom: 16px; }
+.app-habit-card { border: 1px solid var(--primary-light); background-color: #F8F9F7; border-radius: 16px; padding: 16px; display: flex; gap: 16px; align-items: center; margin-bottom: 24px; }
 .app-habit-text { flex: 1; }
 .app-habit-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
 .app-habit-text p { font-size: 12px; color: #666; margin-bottom: 12px; line-height: 1.5; }
-.app-btn-detail {
-    background-color: var(--primary-dark); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: none; cursor: pointer;
-}
+.app-btn-detail { background-color: var(--primary-dark); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: none; cursor: pointer; }
 .app-habit-chart { text-align: center; font-size: 12px; color: #888; }
 .app-emotion-score { border: 2px solid var(--primary-light); border-radius: 50%; width: 70px; height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 8px; }
 .app-emotion-score strong { font-size: 18px; font-weight: 900; color: var(--text-dark); }
-
 .app-sns-filter { display: flex; gap: 8px; margin-bottom: 16px; }
-.sns-filter-btn {
-    padding: 8px 16px; border-radius: 16px; background-color: #f1f3f5; color: #888; font-size: 14px; font-weight: 600; border: none; cursor: pointer;
-}
+.sns-filter-btn { padding: 8px 16px; border-radius: 16px; background-color: #f1f3f5; color: #888; font-size: 14px; font-weight: 600; border: none; cursor: pointer; }
 .sns-filter-btn.active { background-color: var(--primary-dark); color: #fff; }
-
-.app-chat-list-container .list-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
-}
+.app-chat-list-container .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .app-chat-list-container .list-header h4 { font-size: 16px; font-weight: 700; }
 .app-chat-list-container .list-header span { font-size: 12px; color: #999; }
-
 .app-chat-list { display: none; }
 .app-chat-list.active { display: block; }
-
-.app-chat-item {
-    padding: 16px 0; border-bottom: 1px solid #f0f0f0; display: flex; gap: 12px;
-}
+.app-chat-item { padding: 16px 0; border-bottom: 1px solid #f0f0f0; display: flex; gap: 12px; }
 .app-chat-item:last-child { border-bottom: none; }
 .app-profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
 .app-chat-details { flex: 1; overflow: hidden; }
@@ -207,14 +187,33 @@
 .app-chat-temp { font-size: 12px; font-weight: 600; margin-bottom: 10px; }
 .app-chat-temp.positive { color: #43a047; }
 .app-chat-temp.neutral { color: #e53935; }
-
 .app-chat-tags { display: flex; gap: 6px; margin-bottom: 10px; }
 .app-chat-tags span { background-color: #f1f3f5; color: #555; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
 .app-detail-link { text-align: right; display: block; font-size: 13px; font-weight: 700; color: #888; cursor: pointer; }
 
-/* Screen 3: 보고서 화면 */
+/* Screen 3: 보고서 화면 (뒤로가기 버튼 추가) */
 .report-preview {
     padding: 20px;
+}
+.report-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 0 10px;
+}
+.btn-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+}
+.report-header h4 {
+    font-size: 18px;
+    font-weight: 700;
 }
 .report-preview .report-card {
      background-color: #fff;
@@ -229,24 +228,77 @@
 
 
 /* =================================== */
-/* 2. API 프로토타입 스타일          */
+/* 2. API 프로토타입 스타일 (수정)     */
 /* =================================== */
-.chat-window { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
-.api-message, .api-analysis-box { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.api-message.visible, .api-analysis-box.visible { opacity: 1; transform: translateY(0); }
-.api-message { display: flex; align-items: flex-end; gap: 8px; max-width: 70%; }
+.keyboard-prototype-container {
+    height: 640px; /* 프레임 높이에 맞게 조절 */
+    background-color: #ABC1D1; /* 카톡 배경색 */
+    display: flex;
+    flex-direction: column;
+    position: relative; /* 자식 요소의 absolute 포지셔닝 기준 */
+}
+.chat-history {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+.ai-suggestion-bar {
+    position: absolute; /* 수정: 키보드 위에 떠 있도록 */
+    bottom: 215px; /* 키보드 높이만큼 띄움 (조절 필요) */
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    border-top: 1px solid #eee;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.ai-suggestion-bar.visible {
+    opacity: 1;
+}
+.ai-suggestion-bar i {
+    flex-shrink: 0;
+}
+.ai-suggestion-bar strong {
+    font-weight: 700;
+    color: var(--text-dark);
+}
+.ai-suggestion-bar p {
+    font-style: italic;
+    color: #4F46E5;
+}
+.keyboard-area {
+    position: absolute; /* 수정: 화면 하단에 고정 */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #D2D5DB;
+}
+.keyboard-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 메시지 버블 스타일 (기존과 유사) */
+.api-message { display: flex; align-items: flex-end; gap: 8px; max-width: 70%; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.api-message.visible { opacity: 1; transform: translateY(0); }
 .avatar { width: 40px; height: 40px; border-radius: 50%; }
 .bubble { padding: 12px 16px; border-radius: 18px; line-height: 1.5; }
 .api-message.opponent { align-self: flex-start; }
 .api-message.opponent .bubble { background-color: #fff; border-top-left-radius: 4px; }
 .api-message.user { align-self: flex-end; }
 .api-message.user .bubble { background-color: #FFEB33; border-top-right-radius: 4px; }
-.api-analysis-box { align-self: center; background-color: rgba(0,0,0,0.05); padding: 10px 16px; border-radius: 8px; font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
-.api-analysis-box.suggestion { background-color: #e3f2fd; color: #1565c0; }
-.suggestion-content strong { display: block; font-weight: 700; margin-bottom: 4px; }
-.suggestion-content p { font-style: italic; }
 
-/* =================================== */
-/* 공통 애니메이션                  */
-/* =================================== */
+/* 공통 애니메이션 */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
