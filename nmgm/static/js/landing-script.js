@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // ② 응답으로 받은 JSON 데이터를 reportData 변수에 저장합니다.
                 const reportData = await response.json();
-
+                debugger;    
                 // ③ 받은 데이터를 브라우저 임시 저장소(localStorage)에 저장합니다.
                 localStorage.setItem('reportData', JSON.stringify(reportData));
 
