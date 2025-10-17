@@ -29,6 +29,10 @@
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;   /* ✅ 한 줄로 강제 표시 */
+    overflow: hidden;      /* ✅ 혹시 넘치면 숨김 */
+    text-overflow: ellipsis;
+    min-width: 150px;
 }
 
 .toggle-btn.active {

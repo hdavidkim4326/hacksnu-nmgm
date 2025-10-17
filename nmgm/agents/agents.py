@@ -1,9 +1,5 @@
 from .wrappers import GoogleWrapper
-<<<<<<< HEAD
 from konlpy.tag import Okt
-=======
-from konlpy.tag import Kkma
->>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
 from django.db.models import QuerySet
 from nmgm.models import Message, Thread
 from datetime import datetime, timedelta
@@ -42,28 +38,15 @@ from .types import (
     BriefMessageInfo
 )
 
-<<<<<<< HEAD
-okt = Okt()
-tagset = okt.tagset
+# okt = Okt()
+# tagset = okt.tagset
+
 load_dotenv()
 
 KEEP_TAGS = {
     "Noun",
-    "Verb", 
-    "Adjective", 
-=======
-kkma = Kkma()
-tagset = kkma.tagset
-
-load_dotenv()
-
-KEEP_TAGS = {
-    "NNG",  # 일반 명사
-    "NNP",  # 고유 명사
-    "NP",   # 대명사
-    "VV",   # 동사
-    "VA",   # 형용사
->>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
+    "Verb",
+    "Adjective"
 }
 
 
@@ -122,11 +105,7 @@ class Loader(BaseAgent):
         self.embedding_model = SentenceTransformer(
             "upskyy/bge-m3-korean", cache_folder="./models/bge-m3"
         )
-<<<<<<< HEAD
-        self.konlp = Okt()
-=======
-        self.konlp = Kkma()
->>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
+        # self.konlp = Okt()
     
     def load_chatroom(self):
         self.embed_all_messages()
@@ -191,17 +170,17 @@ class Loader(BaseAgent):
             if isinstance(msg.content, bytes):
                 msg.content = msg.content.decode("utf-8", errors="ignore")
             safe_text = re.sub(r"[^가-힣A-Za-z0-9\s.,!?~]", "", msg.content or "")
-            pos_tags = self.konlp.pos(safe_text)
+            # pos_tags = self.konlp.pos(safe_text)
             pos_dict = {}
             
-            for _, tag in pos_tags:
-                if tag not in pos_dict:
-                    pos_dict[tag] = 0
-                pos_dict[tag] += 1
+            # for _, tag in pos_tags:
+            #     if tag not in pos_dict:
+            #         pos_dict[tag] = 0
+            #     pos_dict[tag] += 1
 
             # EMOTION ANALYSIS (Gemini)
             msg_metadata = self.analyze_message(msg.content).model_dump()
-            msg_metadata["freq_words"] = Counter(word for word, tag in pos_tags if tag in KEEP_TAGS)
+            msg_metadata["freq_words"] = {}#Counter(word for word, tag in pos_tags if tag in KEEP_TAGS)
             msg_metadata["emoji_count"] = emoji_count
             msg_metadata["pos_tags"] = pos_dict
 
@@ -356,13 +335,14 @@ class UserReportAgent(ReportAgent):
             round(initiative_count / thread_count, 2) if message_count else None
         )
         avg_msg_length = round(length_sum / message_count, 2) if message_count else None
-        pos_tags = [
-            {
-                tagset[k]: round(v / message_count, 2)
-            } for k, v in sorted(
-                    pos_tags.items(), key=lambda item: item[1], reverse=True
-                )
-        ] if message_count else []
+        pos_tags = []
+        # pos_tags = [
+        #     {
+        #         tagset[k]: round(v / message_count, 2)
+        #     } for k, v in sorted(
+        #             pos_tags.items(), key=lambda item: item[1], reverse=True
+        #         )
+        # ] if message_count else []
         emoji_avg = round(emoji_count / message_count, 2) if message_count else 0
 
         user_report = UserReport(username=self.user.name,

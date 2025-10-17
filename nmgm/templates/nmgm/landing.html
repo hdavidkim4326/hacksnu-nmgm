@@ -82,8 +82,11 @@
                         </label>
                     </div>
 
-                    <div class="upload-footer">
-                        <button id="start-analysis-btn" class="btn btn-analysis" disabled>
+                    {% load static %} <div class="upload-footer">
+                        <button 
+                            id="start-analysis-btn" 
+                            class="btn btn-analysis" 
+                            data-report-url="{% url 'report' %}" disabled>
                             AI 분석 시작하기 →
                         </button>
                     </div>
