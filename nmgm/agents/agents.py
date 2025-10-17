@@ -1,5 +1,9 @@
 from .wrappers import GoogleWrapper
+<<<<<<< HEAD
 from konlpy.tag import Okt
+=======
+from konlpy.tag import Kkma
+>>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
 from django.db.models import QuerySet
 from nmgm.models import Message, Thread
 from datetime import datetime, timedelta
@@ -38,6 +42,7 @@ from .types import (
     BriefMessageInfo
 )
 
+<<<<<<< HEAD
 okt = Okt()
 tagset = okt.tagset
 load_dotenv()
@@ -46,6 +51,19 @@ KEEP_TAGS = {
     "Noun",
     "Verb", 
     "Adjective", 
+=======
+kkma = Kkma()
+tagset = kkma.tagset
+
+load_dotenv()
+
+KEEP_TAGS = {
+    "NNG",  # 일반 명사
+    "NNP",  # 고유 명사
+    "NP",   # 대명사
+    "VV",   # 동사
+    "VA",   # 형용사
+>>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
 }
 
 
@@ -104,7 +122,11 @@ class Loader(BaseAgent):
         self.embedding_model = SentenceTransformer(
             "upskyy/bge-m3-korean", cache_folder="./models/bge-m3"
         )
+<<<<<<< HEAD
         self.konlp = Okt()
+=======
+        self.konlp = Kkma()
+>>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
     
     def load_chatroom(self):
         self.embed_all_messages()

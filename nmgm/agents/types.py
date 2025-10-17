@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 import datetime
+=======
+from audioop import avg
+import datetime
+from mimetypes import init
+>>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
 from pydantic import BaseModel, Field
 from typing import Literal
 from enum import Enum
