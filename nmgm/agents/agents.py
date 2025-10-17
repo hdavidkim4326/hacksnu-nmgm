@@ -493,7 +493,7 @@ class ChatroomReportAgent(ReportAgent):
     
     def get_user_analysis(self, user: User) -> UserAnalysis:
         username = user.name
-        personality = user.metadata.get("personality") if user.metadata else None
+        personality = user.metadata.get("personality") if user.metadata else "표현형"
         messages = Message.objects.filter(room=self.chatroom, user_id=user.id).order_by("sent_time")
 
         if not messages:
