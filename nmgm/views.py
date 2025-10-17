@@ -51,6 +51,7 @@ def generate_chatroom_report(request):
     report = ChatroomReportAgent(
         chatroom=chatroom, api_key=os.getenv("GEMINI_KEY")
     ).generate_report()
+    breakpoint()
     return JsonResponse(report)
 
 
