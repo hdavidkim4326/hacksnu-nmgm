@@ -6,7 +6,6 @@ pillow==11.3.0
 sqlparse==0.5.3
 tzdata==2025.2
 django-environ==0.12.0
-<<<<<<< HEAD
 djangorestframework==3.16.1
 pgvector==0.4.1
 psycopg2-binary==2.9.10
@@ -17,6 +16,3 @@ pandas==2.3.3
 google-genai==1.43.0
 emoji==2.15.0
 whitenoise==6.6.0
-=======
-djangorestframework==3.16.1
->>>>>>> 4818c72b (feat. Initial DB settings)
