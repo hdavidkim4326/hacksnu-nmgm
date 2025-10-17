@@ -27,18 +27,31 @@ class Chatroom(models.Model):
 
     def load(self, dataframe):
         for _, row in dataframe.iterrows():
-            user, _ = User.objects.get_or_create(name=row["보낸 사람"])
+            # user, _ = User.objects.get_or_create(name=row["보낸 사람"])
+            # ChatroomUser.objects.get_or_create(user=user, chatroom=self)
+
+            # dt_str = f"{row['날짜']} {row['시간']}"
+            # # Example: "2025.06.10 9:42"
+            # naive_dt = datetime.strptime(dt_str, "%Y.%m.%d %H:%M")
+            # aware_dt = timezone.make_aware(naive_dt, timezone.get_current_timezone())
+
+            # Message.objects.create(
+            #     user=user,
+            #     room=self,
+            #     content=row["내용"],
+            #     sent_time=aware_dt,
+            # )
+            user, _ = User.objects.get_or_create(name=row["User"])
             ChatroomUser.objects.get_or_create(user=user, chatroom=self)
 
-            dt_str = f"{row['날짜']} {row['시간']}"
-            # Example: "2025.06.10 9:42"
-            naive_dt = datetime.strptime(dt_str, "%Y.%m.%d %H:%M")
+            dt_str = row['Date']
+            # Example: "2025-06-10 09:42:00"
+            naive_dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
             aware_dt = timezone.make_aware(naive_dt, timezone.get_current_timezone())
-
             Message.objects.create(
                 user=user,
                 room=self,
-                content=row["내용"],
+                content=row["Message"],
                 sent_time=aware_dt,
             )
 
