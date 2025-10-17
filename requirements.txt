@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 aiohappyeyeballs==2.6.1
 aiohttp==3.11.16
 aiosignal==1.3.2
@@ -35,15 +34,6 @@ defusedxml==0.7.1
 deprecation==2.1.0
 distlib==0.3.9
 Django==5.2.7
-<<<<<<< HEAD
-=======
-gunicorn==23.0.0
-packaging==25.0
-pillow==11.3.0
-sqlparse==0.5.3
-tzdata==2025.2
-django-environ==0.12.0
->>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
 djangorestframework==3.16.1
 dulwich==0.22.8
 environs==14.3.0
@@ -154,7 +144,6 @@ proto-plus==1.26.1
 protobuf==5.29.5
 psutil==6.1.1
 psycopg2-binary==2.9.10
-<<<<<<< HEAD
 ptyprocess==0.7.0
 pure_eval==0.2.3
 pyasn1==0.6.1
@@ -237,13 +226,11 @@ widgetsnbextension==4.0.13
 xattr==1.1.4
 yarl==1.19.0
 zstandard==0.23.0
-=======
 transformers==4.57.0
 sentence-transformers==5.1.1
 konlpy==0.6.0
 pandas==2.3.3
 google-genai==1.43.0
-=======
 annotated-types==0.7.0
 anyio==4.11.0
 asgiref==3.10.0
@@ -254,7 +241,6 @@ colorama==0.4.6
 Django==5.2.7
 django-environ==0.12.0
 djangorestframework==3.16.1
->>>>>>> Stashed changes
 emoji==2.15.0
 filelock==3.20.0
 fsspec==2025.9.0
@@ -312,7 +298,3 @@ tzdata==2025.2
 urllib3==2.5.0
 websockets==15.0.1
 whitenoise==6.6.0
-<<<<<<< Updated upstream
->>>>>>> b28731c212ddfe219b2cc1038fb82a819821d7a2
-=======
->>>>>>> Stashed changes
