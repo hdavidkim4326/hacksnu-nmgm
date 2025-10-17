@@ -427,6 +427,7 @@ class ChatroomReportAgent(ReportAgent):
 
     def get_chat_summary(self) -> ChatSummary:
         threads = self.get_all_threads()
+        breakpoint()
         if not threads:
             return ChatSummary(
                 summary="No messages in this chatroom.",
@@ -434,7 +435,7 @@ class ChatroomReportAgent(ReportAgent):
                 end_time=None,
                 threads=[],
             )
-        
+        breakpoint()
         start_time = min(thread.metadata.get("start_time") for thread in threads if thread.metadata and thread.metadata.get("start_time"))
         end_time = max(thread.metadata.get("end_time") for thread in threads if thread.metadata and thread.metadata.get("end_time"))
 
@@ -444,6 +445,7 @@ class ChatroomReportAgent(ReportAgent):
             ),
             model_name="gemini-2.0-flash",
         )
+        breakpoint()
 
         return ChatSummary(
             summary=summary,

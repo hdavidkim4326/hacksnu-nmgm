@@ -466,7 +466,7 @@ class ChatroomReportAgent:
         return SingleUserData(
             user_id=user.id,
             username=user.name,
-            personality=user.metadata.get("personality") if user.metadata else None,
+            personality="표현형",#user.metadata.get("personality") if user.metadata else None,
             num_messages=Message.objects.filter(
                 room=self.chatroom.id, user_id=user.id
             ).count(),

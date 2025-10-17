@@ -29,11 +29,13 @@ def import_data(request):
     try:
         uploaded_file = request.FILES["file"]
         dataframe = pd.read_csv(uploaded_file)
-        filepath = os.path.join("chats", uploaded_file.name)
+        filepath = uploaded_file.name
         
-        chatroom, is_new = Chatroom.objects.get_or_create(name=filepath)
+        chatroom = Chatroom.objects.filter(name=filepath)[0]
         
-        if is_new:
+        # chatroom, is_new = Chatroom.objects.get_or_create(name=filepath)
+        
+        if False:
             chatroom.load(dataframe)
         
         # --- 여기가 핵심 수정 부분 ---
@@ -71,7 +73,7 @@ def clear_emotions(request):
 
 
 def generate_chatroom_report(request):
-    filepath = "chats/" + request.GET.get("filepath")  # ex. chat_01.csv
+    filepath = request.GET.get("filepath")  # ex. chat_01.csv
     chatroom = Chatroom.objects.get(name=filepath)
     report = ChatroomReportAgent(
         chatroom=chatroom, api_key=os.getenv("GEMINI_KEY")
