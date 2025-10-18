@@ -214,9 +214,38 @@ summarize_all_threads_prompt = dedent("""
 
 describe_personality_prompt = dedent("""
         Describe the texting style of the user with the following data with two sentences.
+        And fill in the personality type among the following categories: 표현형, 본능형, 지시형, 정밀형, 조화형, 공감형, 분석형, 중재형.
+        
         <Input>
         {metadata}
         </Input>
+
+        For the personality type analysis, consider the following:
+
+            1. Expressive : Direct, Emotional, Friendly, Dominant
+                - 솔직하고 따뜻한 감정표현, 속도가 빠르고 에너지 높음.
+                - 감탄사·이모지 ↑, 단문 직진형, “너무 좋다!!!”
+            2. Instinctive : Direct, Emotional, Unfriendly, Dominant
+                - 즉흥적 감정·불만 표현이 빠름. 선의여도 날카롭게 들릴 수 있음.
+                - 명령·단정 “그건 아니야”, 반문·강조표현 ↑
+            3. Commander : Direct, Logical, Dominant
+                - 목표·효율 중심, 과업지향. 메시지 구조 선명.
+                - “우선 A→B”, “데드라인”, 조건·절차·숫자 ↑
+            4. Precisor : Direct, Logical, Neutral, Dominant
+                - 팩트·정밀도 중시, 예외·세부조건을 명시.
+                - “정확히”, “구체적으로”, “예외적으로” 등 세부 규정 ↑
+            5. Harmonizer : Soft, Emotional, Friendly, Not-Dominant
+                - 갈등 회피·관계 우선. 공감·배려 표현 풍부.
+                - “혹시”, “괜찮다면”, “고마워/미안” ↑, 이모지 ↑
+            6. Empathizer : Soft, Emotional, Friendly
+                - 감정 읽기·언어 완충 탁월, 분위기 살림.
+                - 반영문(“네 입장 이해”), 정서 라벨링(“답답했겠다”)
+            7. Analyst : Soft, Logical Neutral, Not-Dominant
+                - 데이터·근거 기반, 말투는 부드럽게.
+                - “근거는…”, “데이터상”, 완곡+논리 접속사 동시 ↑
+            8. Mediator : Soft, Logical, Friendly
+                - 갈등 중재·프레이밍 능숙, 합의안 제시.
+                - “한편/다만”, “둘 다 맞음”, “중간 제안” ↑
         Make sure the output is in Korean.
         """)
 

@@ -97,7 +97,7 @@ class BriefMessageInfo(BaseModel):
 
 class UserAnalysis(BaseModel):
     username: str
-    personality: UserType
+    personality: UserType | None
     description: str
     avg_indices: list[ConversationIndexOutput]
     avg_emotions: list[EmotionOutput]
@@ -136,7 +136,7 @@ class UserReport(BaseModel):
     word_counts: list[WordCount]
     avg_emotions: list[EmotionOutput]
     avg_indices: list[ConversationIndexOutput]
-    user_type: UserType
+    user_type: UserType | None
     summary: str
     strengths: list[Strength]
     weaknesses: list[Weakness]

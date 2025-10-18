@@ -555,7 +555,7 @@ class ChatroomReportAgent(ReportAgent):
         ]
         initiative_rate = round(initiative_count / len(set(msg.thread_id for msg in messages if msg.thread_id)), 2) if messages else 0.0
         
-        description = self.wrapper.generate(
+        user_analysis = self.wrapper.generate(
             prompt = describe_personality_prompt.format(
                 metadata = {
                     "username": username,
@@ -567,18 +567,10 @@ class ChatroomReportAgent(ReportAgent):
                 }
             ),
             model_name="gemini-2.0-flash",
+            structure= UserAnalysis,
         )
 
-        return UserAnalysis(
-            username=username,
-            personality=personality,
-            description=description,
-            avg_indices=index_avg,
-            avg_emotions=emotion_avg,
-            median_response_time=response_time_median,
-            initiative_rate=initiative_rate,
-            messages=brief_messages,
-        )
+        return user_analysis
     
     def get_warnings(
         self, messages: QuerySet[Message], users: list[UserAnalysis]
