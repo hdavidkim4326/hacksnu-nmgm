@@ -22,3 +22,6 @@ emoji==2.15.0
 # --- pandas (CSV 파싱용) ---
 pandas==2.2.3
 numpy==1.26.4
+pydantic==2.12.2
+emoji==2.15.0
+tqdm==4.67.1 
