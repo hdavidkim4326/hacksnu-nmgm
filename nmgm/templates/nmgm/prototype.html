@@ -170,46 +170,239 @@
                                     </main>
                                 </div>
                             </div>
-                            <!-- Screen 3: 보고서 -->
+                            
+                            <!-- Screen 3: 보고서(개요) -->
                             <div class="app-screen" id="app-screen-3">
-                                 <div class="report-preview">
-                                     <div class="report-header">
-                                         <button class="btn-back" id="btn-back-to-list"><i data-lucide="arrow-left"></i></button>
-                                         <h4>분석 보고서</h4>
-                                     </div>
-                                     <section class="report-card">
-                                        <h2 class="card-title">AI 한줄 요약</h2>
-                                        <p class="card-text">김하윤님과의 대화에서 하윤님은 주로 대화를 리드하며 긍정적인 분위기를 만들어가고 있습니다.</p>
+                                <div class="report-preview">
+                                    <div class="report-header">
+                                        <button class="btn-back" id="btn-back-to-list">
+                                            <i data-lucide="arrow-left"></i>
+                                        </button>
+                                        <h4>분석 보고서 · 개요</h4>
+                                    </div>
+
+                                    <!-- 요약 카드 -->
+                                    <section class="report-card kpi-summary">
+                                        <header class="card-head">
+                                            <h2 class="card-title">AI 한줄 요약</h2>
+                                            <button class="btn-secondary" id="btn-go-detail">자세한 분석 보기</button>
+                                        </header>
+                                        <p class="card-text">
+                                            최근 대화에서 하윤님은 솔직하고 긍정적인 분위기를 주도합니다. 다만 빠른 템포와
+                                            대명사 중심 표현이 간혹 의미 오해를 유발할 수 있어요.
+                                        </p>
+
+                                        <div class="kpi-grid">
+                                            <!-- 도넛 KPI: 감정전달력 -->
+                                            <div class="kpi">
+                                                <svg viewBox="0 0 44 44" class="donut">
+                                                    <circle cx="22" cy="22" r="19" class="donut-track"></circle>
+                                                    <circle cx="22" cy="22" r="19" class="donut-bar" 
+                                                            stroke-dasharray="119.38 119.38" stroke-dashoffset="68.06"></circle>
+                                                    <text x="22" y="22" class="donut-label">43%</text>
+                                                </svg>
+                                                <div class="kpi-meta">
+                                                    <strong>감정 전달력</strong>
+                                                    <span class="kpi-desc">이모지·감정어 활용이 풍부</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 도넛 KPI: 의미 명확성 -->
+                                            <div class="kpi">
+                                                <svg viewBox="0 0 44 44" class="donut">
+                                                    <circle cx="22" cy="22" r="19" class="donut-track"></circle>
+                                                    <circle cx="22" cy="22" r="19" class="donut-bar"
+                                                            stroke-dasharray="119.38 119.38" stroke-dashoffset="94.29"></circle>
+                                                    <text x="22" y="22" class="donut-label">21%</text>
+                                                </svg>
+                                                <div class="kpi-meta">
+                                                    <strong>의미 명확성</strong>
+                                                    <span class="kpi-desc">대명사 사용↑로 문장 모호</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 막대 KPI: 직설성 수치 -->
+                                            <div class="kpi bars">
+                                                <strong>직설성 수치</strong>
+                                                <div class="bar"><span style="width: 78%"></span></div>
+                                                <small>솔직·단정 톤이 강점 (완충 표현을 소량 보강)</small>
+                                            </div>
+
+                                            <!-- 막대 KPI: 의미 확인 요청 비율 -->
+                                            <div class="kpi bars">
+                                                <strong>의미 확인 요청</strong>
+                                                <div class="bar"><span style="width: 31%"></span></div>
+                                                <small>상대의 재확인 요청이 잦음 → 구체 명시 권장</small>
+                                            </div>
+                                        </div>
                                     </section>
+
+                                    <!-- 말끝(종결어미) TOP5 -->
+                                    <section class="report-card ending-stats">
+                                        <h2 class="card-title">가장 가까운 대화 상대 - 관계 온도</h2>
+                                        <ul class="ending-list">
+                                            <li><span>김하윤 - 71도</span><div class="bar"><span style="width: 85%"></span></div></li>
+                                            <li><span>윤성빈 - 60도</span><div class="bar"><span style="width: 72%"></span></div></li>
+                                            <li><span>엄마 - 51도</span><div class="bar"><span style="width: 54%"></span></div></li>
+                                            <li><span>최영한 교수님 - 32도 </span><div class="bar"><span style="width: 41%"></span></div></li>
+                                            <li><span>양창섭 선배님 - 23도</span><div class="bar"><span style="width: 28%"></span></div></li>
+                                        </ul>
+                                    </section>
+
+                                    <!-- 강점/리스크 -->
+                                    <section class="report-card two-col">
+                                        <div>
+                                            <h2 class="card-title">의사소통 강점</h2>
+                                            <ul class="checklist">
+                                                <li>솔직·직관적 표현으로 의도 전달이 빠름</li>
+                                                <li>감정어·이모지 활용으로 높은 감정 전달력</li>
+                                                <li>대화를 주도하며 에너지 있는 분위기 형성</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h2 class="card-title">잠재 리스크</h2>
+                                            <ul class="checklist warn">
+                                                <li>빠른 템포가 오해·충돌로 이어질 위험</li>
+                                                <li>대명사 중심 표현 → 의미 모호성 증가</li>
+                                                <li>짧은 메시지로 정보가 축약·생략될 수 있음</li>
+                                            </ul>
+                                        </div>
+                                    </section>
+
+                                    <!-- 개선 가이드 -->
                                     <section class="report-card">
-                                        <h2 class="card-title">상세 분석</h2>
-                                        <p class="card-text">대화 주도권은 6:4로 하윤님이 더 높으며, 특히 질문을 통해 상대방의 참여를 유도하는 경향이 보입니다. '좋아요', '고마워요'와 같은 긍정적 표현의 사용 빈도가 높아 안정적인 관계를 유지하고 있습니다.</p>
+                                        <h2 class="card-title">개선 가이드</h2>
+                                        <ol class="guide-list">
+                                            <li><strong>감정표현 + 이유</strong>: 즉흥 감정 뒤에 한 줄 맥락을 덧붙여 충돌률↓</li>
+                                            <li><strong>대명사 지양</strong>: “그거/이거” 대신 명사·대상 명시로 의미 명확성↑</li>
+                                            <li><strong>요약·재확인</strong>: 빠른 답 대신 짧은 요약 문장으로 완결성↑</li>
+                                        </ol>
                                     </section>
                                 </div>
                             </div>
+                            <!-- Screen 4: 대화 상세 리포트 -->
+                            <div class="app-screen" id="app-screen-4">
+                                <div class="report-preview">
+                                    <div class="report-header">
+                                        <button class="btn-back" id="btn-back-to-overview">
+                                            <i data-lucide="arrow-left"></i>
+                                        </button>
+                                        <h4>대화 상세 리포트</h4>
+                                    </div>
+
+                                    <!-- 페르소나 비교 -->
+                                    <section class="report-card persona-compare">
+                                        <h2 class="card-title">대화 성향 비교</h2>
+                                        <div class="persona-grid">
+                                            <div class="persona">
+                                                <h3>하윤 님</h3>
+                                                <p>표현형(Expressive) · 주도/감정 공유형</p>
+                                                <ul class="badge-row">
+                                                    <li class="badge">직설</li><li class="badge">감정</li><li class="badge">속도 빠름</li>
+                                                </ul>
+                                            </div>
+                                            <div class="persona">
+                                                <h3>상대</h3>
+                                                <p>조화형(Harmonizer) · 공감/완충형</p>
+                                                <ul class="badge-row">
+                                                    <li class="badge">완충</li><li class="badge">공감</li><li class="badge">속도 보통</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!-- 오해 위험 구간 -->
+                                    <section class="report-card">
+                                        <h2 class="card-title">오해 위험 구간 (하이라이트 3)</h2>
+                                        <table class="risk-table">
+                                            <thead>
+                                                <tr><th>시간</th><th>메시지</th><th>오해 유형</th><th>설명</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>14:42</td>
+                                                    <td>하윤: “나만 표현하고 나만 맞추고…”</td>
+                                                    <td>감정 해석 차이</td>
+                                                    <td>‘나만’이 자기비난이 아닌 서운함 표현이지만, 단정적 비난으로 들릴 수 있음</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>13:49</td>
+                                                    <td>상대: “요즘 일도 많고…”</td>
+                                                    <td>의미 불일치</td>
+                                                    <td>업무로 말수가 준 것인데, 관계 문제로 회피하는 것으로 해석될 소지</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>23:39</td>
+                                                    <td>상대: “응 괜찮아”</td>
+                                                    <td>감정 해석 차이</td>
+                                                    <td>달래는 의도였으나, 상황을 넘어가려는 표현으로 수용될 가능성</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </section>
+
+                                    <!-- 액션 레시피 -->
+                                    <section class="report-card action-recipe">
+                                        <h2 class="card-title">대상자 맞춤 코칭</h2>
+                                        <ul class="checklist">
+                                            <li>단정형 표현에는 <em>질문형 꼬리</em>를 붙여 협조 신호 제공</li>
+                                            <li>감정 뒤엔 맥락 한 줄: “서운해… <em>왜냐면</em> …”</li>
+                                            <li>‘그거/이거’ 대신 구체 대상 명시로 모호성 제거</li>
+                                        </ul>
+                                    </section>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
+
+                
                 <!-- API 프로토타입 -->
                 <div id="api-prototype" class="prototype-content">
-                    <div class="keyboard-prototype-container">
-                        <div class="chat-history">
-                            <div class="api-message opponent" id="msg1">
-                                <img src="https://i.pravatar.cc/150?img=7" class="avatar">
-                                <div class="bubble">혹시 내일 저녁에 시간 괜찮아?</div>
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="api-screen">
+                                <div class="keyboard-prototype-container">
+                                    <div class="chat-history" id="chat">
+                                        <!-- 6턴 시나리오: 상대/사용자 번갈아 등장 -->
+                                        <div class="api-message opponent" id="msg1">
+                                            <img src="https://i.pravatar.cc/150?img=7" class="avatar" alt="">
+                                            <div class="bubble">혹시 내일 저녁에 시간 괜찮아?</div>
+                                        </div>
+                                        <div class="api-message user" id="msg2">
+                                            <div class="bubble"></div>
+                                        </div>
+
+                                        <div class="api-message opponent" id="msg3">
+                                            <img src="https://i.pravatar.cc/150?img=8" class="avatar" alt="">
+                                            <div class="bubble">그럼 다음 주 수요일은 어때?</div>
+                                        </div>
+                                        <div class="api-message user" id="msg4">
+                                            <div class="bubble"></div>
+                                        </div>
+
+                                        <div class="api-message opponent" id="msg5">
+                                            <img src="https://i.pravatar.cc/150?img=8" class="avatar" alt="">
+                                            <div class="bubble">좋아! 7시에 보자. 내가 예약할게.</div>
+                                        </div>
+                                        <div class="api-message user" id="msg6">
+                                            <div class="bubble"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ai-suggestion-bar" id="ai-bar" data-logo="{% static 'images/logo.svg' %}"></div>
+
+                                    <div class="keyboard-area">
+                                        <img src="{% static 'images/keyboard.svg' %}" alt="Keyboard UI" class="keyboard-svg">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="api-message user" id="msg2">
-                                <div class="bubble"></div>
-                            </div>
-                        </div>
-                        <div class="ai-suggestion-bar" id="ai-bar">
-                            <!-- AI 코칭 내용이 여기에 동적으로 표시됩니다 -->
-                        </div>
-                        <div class="keyboard-area">
-                            <img src="{% static 'images/keyboard.svg' %}" alt="Keyboard UI" class="keyboard-svg">
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </main>
