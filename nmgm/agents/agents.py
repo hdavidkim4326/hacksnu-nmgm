@@ -107,10 +107,7 @@ class Loader(BaseAgent):
     def __init__ (self, api_key: str, chatroom: Chatroom):
         super().__init__(api_key)
         self.chatroom = chatroom
-        # self.embedding_model = SentenceTransformer(
-        #     "upskyy/bge-m3-korean", cache_folder="./models/bge-m3"
-        # )
-        # self.konlp = Okt()
+        
     
     def load_chatroom(self):
         # self.embed_all_messages()

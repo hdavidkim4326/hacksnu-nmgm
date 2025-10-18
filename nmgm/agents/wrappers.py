@@ -1,6 +1,15 @@
-from google import genai
-from google.genai import types
 from pydantic import BaseModel
+
+try:
+    # 신규 SDK (google-genai)
+    from google import genai
+    from google.genai import types
+    _USE_NEW = True
+except Exception:
+    # 구버전 SDK (google-generativeai) fallback
+    import google.generativeai as genai  # type: ignore
+    types = None  # 구버전엔 types 모듈 없음
+    _USE_NEW = False
 
 class GoogleWrapper:
     def __init__(self, api_key: str):
