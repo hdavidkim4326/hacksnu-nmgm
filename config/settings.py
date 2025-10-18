@@ -12,8 +12,7 @@ env = environ.Env()
 environ.Env.read_env(env_file=".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-SECRET_KEY = 'django-insecure-t!%r)zhdm56%j5_)4bt)78ei!cwil8v-bu+jj@rk0!8+6j)@^a'
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="dev-secret")
 
 # Vercel's 'VERCEL_ENV' variable is used to distinguish between environments.
 # It will be 'production' on Vercel, and won't exist locally,
