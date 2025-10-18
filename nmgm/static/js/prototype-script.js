@@ -133,10 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
         isApiAnimating = true;
 
         // 타이밍 상수 (필요시 숫자만 조절)
-        const T_APPEAR      = 800;  // 말풍선이 뜬 직후 텀
-        const T_AFTER_TYPE  = 500;  // 내가 타이핑 끝난 뒤 텀
+        const T_APPEAR      = 900;  // 말풍선이 뜬 직후 텀
+        const T_AFTER_TYPE  = 600;  // 내가 타이핑 끝난 뒤 텀
         const T_AFTER_COACH = 1100;  // 코칭 바가 떠 있는 시간
-        const T_PRE_COACH   = 500;  // (추가) 상대 말 → 코칭 전 잠깐 대기
+        const T_PRE_COACH   = 300;  // (추가) 상대 말 → 코칭 전 잠깐 대기
         const T_PRE_REPLY   = 600;  // (추가) 코칭 → 내 말 전 잠깐 대기
         const TYPE_SPEED    = 60;   // 문자당 ms
 
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         showAI({
             title: '대화 확장',
-            desc: '<em>칭찬 + 열린 질문</em>을 붙이면 자연스러운 대화 확장이 가능해요.',
+            desc: '<em>칭찬 + 제안</em>을 붙이면 자연스러운 대화 확장이 가능해요.',
             recos: [
                 '반전 매력이다',
                 '뭐가 제일 재밌었어?',
