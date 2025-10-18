@@ -3,6 +3,11 @@ from .wrappers import GoogleWrapper
 from django.db.models import QuerySet
 from nmgm.models import Message, Thread
 from datetime import datetime, timedelta
+# 맨 위 import 부분 교체
+try:
+    from tqdm import tqdm
+except Exception:
+    def tqdm(x): return x
 
 import re
 from dotenv import load_dotenv
