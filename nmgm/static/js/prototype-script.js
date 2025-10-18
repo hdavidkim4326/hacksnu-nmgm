@@ -100,10 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 아이콘<i> 대신 logo.svg + strong 제목 + 설명 + 아래 칩
+
     function showAI({ title = '코칭', desc = '', recos = [] }) {
         const bar = document.getElementById('ai-bar');
         const logoUrl = bar.dataset.logo || '/static/images/logo.svg'; // fallback
 
+        // 이전 코칭 바 초기화 후 갱신
+        bar.classList.remove('visible');
         bar.innerHTML = `
             <img src="${logoUrl}" alt="NMgM" class="ai-logo">
             <div class="ai-content">
@@ -116,17 +119,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-        bar.classList.add('visible');
+        // 등장
+        requestAnimationFrame(() => bar.classList.add('visible'));
 
+        // 추천 칩 클릭 → 마지막 내 버블에 텍스트 삽입
         bar.querySelectorAll('.chip').forEach(btn => {
             btn.addEventListener('click', () => insertQuickReply(btn.textContent));
         });
     }
 
-
     async function startApiAnimation() {
         if (isApiAnimating) return;
         isApiAnimating = true;
+
+        // 타이밍 상수 (필요시 숫자만 조절)
+        const T_APPEAR      = 800;  // 말풍선이 뜬 직후 텀
+        const T_AFTER_TYPE  = 500;  // 내가 타이핑 끝난 뒤 텀
+        const T_AFTER_COACH = 1100;  // 코칭 바가 떠 있는 시간
+        const T_PRE_COACH   = 500;  // (추가) 상대 말 → 코칭 전 잠깐 대기
+        const T_PRE_REPLY   = 600;  // (추가) 코칭 → 내 말 전 잠깐 대기
+        const TYPE_SPEED    = 60;   // 문자당 ms
 
         const el = {
             aiBar: document.getElementById('ai-bar'),
@@ -148,78 +160,80 @@ document.addEventListener('DOMContentLoaded', () => {
         el.m2b.textContent = '';
         el.m4b.textContent = '';
         el.m6b.textContent = '';
-        await sleep(350);
+        await sleep(250);
 
-        // T1: 상대방 1
+        // ── T1: 상대 (그대로) ───────────────────────────────
         el.m1.classList.add('visible');
-        await sleep(1000);
+        await sleep(T_APPEAR);
 
-        // AI 힌트 1: 의도 파악
-        showAI({
-            title: '의도 파악',
-            desc: '상대방 의도: <strong>약속 제안</strong> (긍정)',
-            recos: ['좋지! 시간만 맞추자', '다음 주는 어때?']
-        });
-        await sleep(1200);
-
-        // T2: 사용자 1 (거절 뉘앙스)
+        // ── T2: 내 말 → 1번 코칭 (그대로) ───────────────────
         el.m2.classList.add('visible');
-        await type(el.m2b, '내일은 좀 어려울 것 같아');
-        await sleep(800);
+        await type(el.m2b, '너가 보기와는 다르게 그런 것도 좋아하는구나ㅎㅎ', TYPE_SPEED);
+        await sleep(T_AFTER_TYPE);
 
-        // AI 힌트 2: 더 부드러운 제안
         showAI({
-            title: '완곡 제안',
-            desc: '직설 거절 대신 <em>대안</em>을 붙여보세요.',
-            recos: [ '다음 주 수/목 어때?', '저녁 7시 괜찮아']
+            title: '말투 코칭',
+            desc: '“보기와 다르게”는 평가처럼 들릴 수 있어요. <em>관심/칭찬</em> 중심으로 바꿔볼까요?',
+            recos: [
+                '완전 반전매력이다 취미의 폭이 되게 넓네ㅎㅎ',
+                '넌 진짜 취미가 다양하다ㅎㅎ',
+                '와 멋지다!'
+            ]
         });
-        await sleep(1200);
+        await sleep(T_AFTER_COACH);
 
-        // T3: 상대방 2
+        // ── T3: 상대 → (추가 대기) → 2번 코칭 → (추가 대기) → 내 T4 ──
         el.m3.classList.add('visible');
-        await sleep(900);
+        await sleep(T_APPEAR);
+        await sleep(T_PRE_COACH); // ★ 추가: 코칭 전에 잠깐 대기
 
-        // AI 힌트 3: 구체화 유도
         showAI({
-            title: '구체화',
-            desc: '요일/시간을 먼저 제시하면 합의가 빨라져요.',
-            recos: ['수요일 7시 가능', '목요일 8시는 어때?', '장소는 강남?']
+            title: '대화 확장',
+            desc: '<em>칭찬 + 열린 질문</em>을 붙이면 자연스러운 대화 확장이 가능해요.',
+            recos: [
+                '반전 매력이다',
+                '뭐가 제일 재밌었어?',
+                '다음엔 나도 만들어 줄 수 있어?'
+            ]
         });
-        await sleep(1000);
+        await sleep(T_AFTER_COACH);
+        await sleep(T_PRE_REPLY); // ★ 추가: 코칭 후 내 말 전 잠깐 대기
 
-        // T4: 사용자 2 (구체 시간 제시)
         el.m4.classList.add('visible');
-        await type(el.m4b, '수요일 7시는 괜찮아!');
-        await sleep(800);
+        await type(el.m4b, '완전 반전매력이네 ㅎㅎ 다음에 나도 만들어줘!', TYPE_SPEED);
+        await sleep(T_AFTER_TYPE);
 
-        // T5: 상대방 3 (확정 + 예약)
+        // ── T5: 상대 → (추가 대기) → 3번 코칭 → (추가 대기) → 내 T6 ──
         el.m5.classList.add('visible');
-        await sleep(800);
+        await sleep(T_APPEAR);
+        await sleep(T_PRE_COACH); // ★ 추가
 
-        // AI 힌트 4: 감사/확인 멘트 제안
         showAI({
-            title: '마무리',
-            desc: '감사/확인 멘트로 따뜻하게 마무리하세요.',
-            recos: ['고마워!', '예약 고마워 🙏', '메뉴 미리 볼게 😉']
+            title: '관계 심화',
+            desc: ' <em>공간 +열린질문</em>을 통하면 관계를 심화할 수 있어요',
+            recos: [
+                '다음에 배우고 싶은 요리가 있어?',
+                '기대된다 ㅎㅎ'        
+            ]
         });
-        await sleep(900);
+        await sleep(T_AFTER_COACH);
+        await sleep(T_PRE_REPLY); // ★ 추가
 
-        // T6: 사용자 3 (감사 + follow-up)
         el.m6.classList.add('visible');
-        await type(el.m6b, '고마워! 메뉴 미리 보고 갈게 😉');
+        await type(el.m6b, '기대되네 ㅎㅎ 다음에 배우고 싶은 요리 있어?', TYPE_SPEED);
 
         isApiAnimating = false;
     }
 
-    // 타이핑 애니메이션
-    function type(node, text) {
+
+    function type(node, text, charDelay = 60) {
         return new Promise(res => {
             node.textContent = '';
             let i = 0;
             const it = setInterval(() => {
                 if (i < text.length) { node.textContent += text[i++]; }
                 else { clearInterval(it); res(); }
-            }, 60);
+            }, charDelay);
         });
     }
 
