@@ -1,12 +1,12 @@
 from .wrappers import GoogleWrapper
-from konlpy.tag import Okt
+
 from django.db.models import QuerySet
 from nmgm.models import Message, Thread
 from datetime import datetime, timedelta
-from tqdm import tqdm
+
 import re
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
+
 from ..models import Chatroom, User, Message, Thread, ChatroomUser
 from .prompts import (
     related_prompt,

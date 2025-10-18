@@ -3,9 +3,11 @@
     {
       "src": "config/wsgi.py",
       "use": "@vercel/python",
-      "config": { "runtime": "python3.9", "maxLambdaSize": "15mb" }
+      "config": { "runtime": "python3.11", "maxLambdaSize": "50mb" }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "config/wsgi.py" }],
+  "routes": [
+    { "src": "/(.*)", "dest": "config/wsgi.py" }
+  ],
   "buildCommand": "bash build_files.sh"
 }
