@@ -366,27 +366,37 @@
                             <div class="api-screen">
                                 <div class="keyboard-prototype-container">
                                     <div class="chat-history" id="chat">
-                                        <!-- 6턴 시나리오: 상대/사용자 번갈아 등장 -->
+
+                                        <!-- 6턴 시나리오: A(상대) ↔ B(사용자) -->
+                                        <!-- T1: A -->
                                         <div class="api-message opponent" id="msg1">
-                                            <img src="https://i.pravatar.cc/150?img=7" class="avatar" alt="">
-                                            <div class="bubble">혹시 내일 저녁에 시간 괜찮아?</div>
+                                            <img src="https://i.pravatar.cc/150?img=8" class="avatar" alt="">
+                                            <div class="bubble">나 어제부터 요리 배운다!</div>
                                         </div>
+
+                                        <!-- T2: B (사용자) — 초기 반응(평가 어투) -->
                                         <div class="api-message user" id="msg2">
                                             <div class="bubble"></div>
                                         </div>
 
+                                        <!-- T3: A 후속 -->
                                         <div class="api-message opponent" id="msg3">
                                             <img src="https://i.pravatar.cc/150?img=8" class="avatar" alt="">
-                                            <div class="bubble">그럼 다음 주 수요일은 어때?</div>
+                                            <div class="bubble">생각보다 재밌더라 ㅎㅎ 파스타부터 시작했어.</div>
                                         </div>
+
+                                        <!-- T4: B (개선 1: 칭찬/관심 중심) -->
                                         <div class="api-message user" id="msg4">
                                             <div class="bubble"></div>
                                         </div>
 
+                                        <!-- T5: A 긍정 응답 -->
                                         <div class="api-message opponent" id="msg5">
                                             <img src="https://i.pravatar.cc/150?img=8" class="avatar" alt="">
-                                            <div class="bubble">좋아! 7시에 보자. 내가 예약할게.</div>
+                                            <div class="bubble">고마워 다음에 완전 맛있게 만들어줄게!</div>
                                         </div>
+
+                                        <!-- T6: B (개선 2: 열린질문 덧붙이기) -->
                                         <div class="api-message user" id="msg6">
                                             <div class="bubble"></div>
                                         </div>
@@ -402,6 +412,7 @@
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </div>
