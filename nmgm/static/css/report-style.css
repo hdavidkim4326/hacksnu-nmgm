@@ -1,122 +1,145 @@
-/* report.html 전용 스타일 */
-.report-main {
-    padding-top: 120px;
-    padding-bottom: 100px;
-    background-color: #f8f9fa;
+/* ========= Base ========= */
+:root{
+  --bg:#f7f8fa;
+  --card:#ffffff;
+  --text:#1d2939;
+  --muted:#667085;
+  --primary:#2e4f21;      /* 딥그린 */
+  --primary-weak:#c4d8c0; /* 연두그린 */
+  --border:#e5e7eb;
+  --shadow: 0 10px 24px rgba(16,24,40,0.06), 0 2px 6px rgba(16,24,40,0.05);
 }
 
-#report-container {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
 
-.report-section {
-    background-color: #fff;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+/* ========= Layout ========= */
+.report-main{ padding:120px 0 100px }
+#report-container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
 }
 
-.section-title {
-    font-size: 24px;
-    font-weight: 900;
-    margin-bottom: 8px;
+.report-section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:28px;
+  box-shadow:var(--shadow);
 }
 
-.section-subtitle {
-    font-size: 16px;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
+.section-title{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-0.2px;
+  margin:0 0 6px;
 }
 
-/* 대화 요약 */
-.summary-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 32px;
-}
-.summary-text p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: var(--text-secondary);
-}
-.summary-threads h4 {
-    margin-bottom: 16px;
-    font-size: 18px;
-}
-.thread-item {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-    margin-bottom: 8px;
-}
-.thread-item-topic { flex: 2; font-weight: 700; }
-.thread-item-type { flex: 1; color: var(--text-secondary); }
-.thread-item-count { flex: 1; }
-
-/* 유저 분석 */
-.user-analysis-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-}
-.user-card h4 {
-    font-size: 20px;
-    margin-bottom: 4px;
-}
-.user-card .personality {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--primary-dark);
-    margin-bottom: 16px;
-}
-.user-card p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
-}
-.user-stats { display: flex; gap: 24px; margin-bottom: 24px; }
-.stat-item { text-align: center; }
-.stat-item .label { font-size: 14px; color: var(--text-secondary); }
-.stat-item .value { font-size: 20px; font-weight: 700; }
-
-/* 레이더 차트 */
-.radar-chart-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.section-subtitle{
+  font-size:14px;
+  color:var(--muted);
+  margin:0 0 22px;
 }
 
-/* 경고 분석 */
-.warnings-table {
-    width: 100%;
-    border-collapse: collapse;
+/* ========= “대화 요약” ========= */
+.summary-grid{
+  display:grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap:24px;
 }
-.warnings-table th, .warnings-table td {
-    padding: 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
+.summary-text h4,
+.summary-threads h4{
+  font-size:16px; font-weight:800; margin: 0 0 10px;
 }
-.warnings-table th { font-weight: 700; }
-.warning-type { font-weight: 700; }
-.action-plan { font-style: italic; color: var(--primary-dark); }
-
-.loading-spinner {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid var(--primary-dark);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 100px auto;
+.summary-text p{
+  font-size:15px; color:var(--text); word-break:keep-all; overflow-wrap:anywhere;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.summary-threads{ display:flex; flex-direction:column; gap:10px; }
+.thread-item{
+  display:grid;
+  grid-template-columns: 1fr auto auto;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  background:#f3f5f7;
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+.thread-item-topic{ font-weight:700; word-break:keep-all; overflow-wrap:anywhere; }
+.thread-item-type{ color:var(--muted); font-size:14px; }
+.thread-item-count{ font-size:14px; color:var(--muted) }
+
+/* ========= “참여자 분석” ========= */
+.user-analysis-container{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:22px;
+}
+.user-card{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px 18px 20px;
+  background:#fff;
+}
+.user-card h4{ margin:0 0 4px; font-size:18px; font-weight:800 }
+.user-card .personality{
+  margin:0 0 14px;
+  font-size:14px; font-weight:700; color:var(--primary);
+  background:linear-gradient(0deg, rgba(46,79,33,.08), rgba(46,79,33,.08));
+  display:inline-block; padding:4px 10px; border-radius:999px;
+}
+.user-card p{ margin:0 0 18px; font-size:14px; color:var(--text); word-break:keep-all; overflow-wrap:anywhere; }
+
+.user-stats{ display:flex; gap:18px; margin: 0 0 16px; }
+.stat-item{ flex:1; text-align:center; padding:10px 8px; border:1px dashed var(--border); border-radius:10px; background:#fafafa }
+.stat-item .label{ font-size:12px; color:var(--muted); margin-bottom:4px }
+.stat-item .value{ font-size:18px; font-weight:800 }
+
+canvas{ width:100% !important; height:auto !important; display:block }
+
+/* 레이더 차트 래퍼 */
+.radar-chart-container{
+  display:flex; justify-content:center; margin-top:8px;
+}
+
+/* ========= “오해 위험 구간” ========= */
+.warnings-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.warnings-table th, .warnings-table td{
+  padding:14px 12px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+  word-break:keep-all; overflow-wrap:anywhere;
+}
+.warnings-table th{
+  font-size:13px; text-transform:uppercase; letter-spacing:.3px; color:var(--muted);
+}
+.warning-type{
+  font-weight:800;
+  color:#a54800;
+  background:#fff1e5;
+  border:1px solid #ffd2b3;
+  padding:4px 8px; border-radius:999px; display:inline-block;
+}
+.action-plan{ color:var(--primary); font-style:italic }
+
+/* ========= Responsive ========= */
+@media (max-width: 980px){
+  .summary-grid{ grid-template-columns:1fr; }
+  .user-analysis-container{ grid-template-columns: 1fr; }
 }
