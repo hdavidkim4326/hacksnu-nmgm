@@ -1,8 +1,24 @@
-asgiref==3.10.0
+# --- Web framework ---
 Django==5.2.7
-gunicorn==23.0.0
-packaging==25.0
-pillow==11.3.0
-sqlparse==0.5.3
-tzdata==2025.2
+djangorestframework==3.16.1
+django-environ==0.12.0
 whitenoise==6.6.0
+
+# --- Postgres / pgvector (psycopg3) ---
+psycopg[binary]==3.2.3
+pgvector==0.4.1
+sqlparse==0.5.3
+
+# --- Google Gemini SDK ---
+google-genai==1.45.0
+
+# --- HTTP client ---
+httpx==0.28.1
+
+# --- Utils (코드에서 사용) ---
+python-dotenv==1.1.1
+emoji==2.15.0
+
+# --- pandas (CSV 파싱용) ---
+pandas==2.2.3
+numpy==1.26.4

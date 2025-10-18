@@ -7,6 +7,8 @@
     <title>NMgM - AI가 당신의 대화를 이해하고, 마음을 이어줍니다</title>
     <link rel="stylesheet" href="{% static 'css/landing-style.css' %}">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/svg+xml" href="static/image/favicon.svg">
+
 </head>
 <body>
 
@@ -52,7 +54,7 @@
                     </div>
                 </div>
                 <div class="hero-mockup">
-                    <img src="{% static 'images/phone-mockup.svg' %}" alt="App Mockup" style="max-width: 90%; height: auto;">
+                    <img src="{% static 'images/app-mock.svg' %}" alt="App Mockup" style="max-width: 90%; height: auto;">
                 </div>
             </div>
         </section>
@@ -82,8 +84,11 @@
                         </label>
                     </div>
 
-                    <div class="upload-footer">
-                        <button id="start-analysis-btn" class="btn btn-analysis" disabled>
+                    {% load static %} <div class="upload-footer">
+                        <button 
+                            id="start-analysis-btn" 
+                            class="btn btn-analysis" 
+                            data-report-url="{% url 'report' %}" disabled>
                             AI 분석 시작하기 →
                         </button>
                     </div>
@@ -123,7 +128,7 @@
                         <p>기존 SNS(카카오톡, 인스타그램 등)에서 메시지를 입력할 때, 키보드 API를 통해 말투-감정 등을 분석하고 더 자연스러운 표현을 제안합니다.</p>
                     </div>
                     <div class="feature-card-image">
-                        <img src="{% static 'images/feature-image-1.png' %}" alt="실시간 대화 코칭">
+                        <img src="{% static 'images/feature-image-1.svg' %}" alt="실시간 대화 코칭">
                     </div>
                 </div>
 
@@ -134,7 +139,7 @@
                         <p>NMgM 앱에서는 주요 SNS의 대화방을 자동으로 불러와 각 관계별 감정 흐름과 대화 패턴을 분석해 시각화합니다.</p>
                     </div>
                     <div class="feature-card-image">
-                        <img src="{% static 'images/feature-image-2.png' %}" alt="주요 sns 채팅방 불러오기">
+                        <img src="{% static 'images/feature-image-2.svg' %}" alt="주요 sns 채팅방 불러오기">
                     </div>
                 </div>
 
@@ -145,7 +150,7 @@
                         <p>NMgM의 리포트는 단순한 감정 그래프가 아닙니다. 언어심리학과 데이터에 근거한 지표로, 사용자의 대화 톤과 숨겨진 맥락을 세밀하게 시각화합니다. 사용자가 궁금한 내용을 챗봇을 통해 지속적으로 질문하고 탐구해나갈 수 있습니다.</p>
                     </div>
                     <div class="feature-card-image">
-                        <img src="{% static 'images/feature-image-3.png' %}" alt="대화 분석 보고서">
+                        <img src="{% static 'images/feature-image-3.svg' %}" alt="대화 분석 보고서">
                     </div>
                 </div>
             </div>

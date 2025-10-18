@@ -457,16 +457,16 @@ body {
 
 .feature-card-image {
     flex-shrink: 0;
-    width: 400px;
-    height: 300px;
+    width: 400px;           /* 카드 너비는 유지 */
+    /* 높이는 굳이 고정 안 해도 OK */
 }
 
 .feature-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-    background-color: #f0f0f0;
+    display: block;
+    height: 350px;          /* ← 높이만 고정 */
+    width: auto;            /* 가로는 비율 유지 */
+    /* object-fit은 필요 없음(가로/세로 둘 다 고정일 때만 의미 있음) */
+    margin: 0 auto;         /* 이미지가 카드보다 좁아지면 가운데 정렬 */
 }
 
 /* --- Why NMGm 섹션 --- */
