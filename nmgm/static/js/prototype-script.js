@@ -90,23 +90,28 @@ document.addEventListener('DOMContentLoaded', () => {
     let isApiAnimating = false;
 
     // 추천 칩 클릭 시, 최근 사용자 버블에 텍스트 삽입
+    // 추천칩을 초안칸에 넣기
     function insertQuickReply(text) {
-        const candidates = ['msg6', 'msg4', 'msg2']
-            .map(id => document.getElementById(id)?.querySelector('.bubble'))
-            .filter(Boolean);
-        const target = candidates.find(el => el.parentElement.classList.contains('visible')) || candidates[0];
-        if (!target) return;
-        target.textContent = (target.textContent?.trim() ? target.textContent + ' ' : '') + text;
+        const box = document.getElementById('compose-input');
+        if (!box) return;
+        const sep = box.textContent.trim() ? ' ' : '';
+        box.textContent = box.textContent + sep + text;
+        placeCaretAtEnd(box);
+    }
+    function placeCaretAtEnd(el) {
+        el.focus();
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
     }
 
-    // 아이콘<i> 대신 logo.svg + strong 제목 + 설명 + 아래 칩
-
+    // 코칭 바 그리기 (칩은 초안칸에 입력)
     function showAI({ title = '코칭', desc = '', recos = [] }) {
         const bar = document.getElementById('ai-bar');
-        const logoUrl = bar.dataset.logo || '/static/images/logo.svg'; // fallback
-
-        // 이전 코칭 바 초기화 후 갱신
-        bar.classList.remove('visible');
+        const logoUrl = bar.dataset.logo || '/static/images/logo.svg';
         bar.innerHTML = `
             <img src="${logoUrl}" alt="NMgM" class="ai-logo">
             <div class="ai-content">
@@ -119,12 +124,69 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-        // 등장
-        requestAnimationFrame(() => bar.classList.add('visible'));
-
-        // 추천 칩 클릭 → 마지막 내 버블에 텍스트 삽입
+        bar.classList.add('visible');
         bar.querySelectorAll('.chip').forEach(btn => {
             btn.addEventListener('click', () => insertQuickReply(btn.textContent));
+        });
+    }
+
+    // 초안 다루기
+    function setDraft(text = '') {
+        const box = document.getElementById('compose-input');
+        box.textContent = text;
+        placeCaretAtEnd(box);
+    }
+    function getDraft() {
+        return document.getElementById('compose-input').textContent.trim();
+    }
+    function clearDraft() {
+        document.getElementById('compose-input').textContent = '';
+    }
+
+    // 전송 대기(클릭 또는 타임아웃)
+    function waitForSend(timeoutMs = 0) {
+        return new Promise(resolve => {
+            const btn = document.getElementById('btn-send');
+            let done = false;
+
+            const clickHandler = () => {
+                if (done) return;
+                done = true;
+                btn.removeEventListener('click', clickHandler);
+                resolve('clicked');
+            };
+            btn.addEventListener('click', clickHandler);
+
+            if (timeoutMs > 0) {
+                setTimeout(() => {
+                    if (done) return;
+                    done = true;
+                    btn.removeEventListener('click', clickHandler);
+                    resolve('timeout');
+                }, timeoutMs);
+            }
+        });
+    }
+
+    // 특정 말풍선으로 초안 전송
+    function sendDraftTo(bubbleEl) {
+        const txt = getDraft();
+        if (!txt) return false;
+        bubbleEl.textContent = txt;
+        bubbleEl.parentElement.classList.add('visible');
+        clearDraft();
+        return true;
+    }
+
+    // 타이핑 애니메이션(상대만 사용)
+    function type(node, text, speed = 60) {
+        return new Promise(res => {
+            node.textContent = '';
+            let i = 0;
+            const it = setInterval(() => {
+                if (i < text.length) node.textContent += text[i++];
+                else { clearInterval(it); res(); }
+            }, speed);
         });
     }
 
@@ -132,98 +194,108 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isApiAnimating) return;
         isApiAnimating = true;
 
-        // 타이밍 상수 (필요시 숫자만 조절)
-        const T_APPEAR      = 900;  // 말풍선이 뜬 직후 텀
-        const T_AFTER_TYPE  = 600;  // 내가 타이핑 끝난 뒤 텀
-        const T_AFTER_COACH = 1100;  // 코칭 바가 떠 있는 시간
-        const T_PRE_COACH   = 300;  // (추가) 상대 말 → 코칭 전 잠깐 대기
-        const T_PRE_REPLY   = 600;  // (추가) 코칭 → 내 말 전 잠깐 대기
-        const TYPE_SPEED    = 60;   // 문자당 ms
-
+        const T_APPEAR      = 600;  // 상대 말풍선 뜬 직후 텀
+        const T_PRE_COACH   = 500;  // 코칭 전 숨 고르기
+        const T_AFTER_COACH = 900;  // 코칭 노출 시간
+        const AUTO_SEND     = 1400; // 사용자 미클릭시 자동 전송까지 대기(ms)
+        const T_AFTER_SEND    = 800;
         const el = {
             aiBar: document.getElementById('ai-bar'),
             m1: document.getElementById('msg1'),
-            m2: document.getElementById('msg2'),
-            m2b: document.getElementById('msg2').querySelector('.bubble'),
+            m2: document.getElementById('msg2').querySelector('.bubble'),
             m3: document.getElementById('msg3'),
-            m4: document.getElementById('msg4'),
-            m4b: document.getElementById('msg4').querySelector('.bubble'),
+            m4: document.getElementById('msg4').querySelector('.bubble'),
             m5: document.getElementById('msg5'),
-            m6: document.getElementById('msg6'),
-            m6b: document.getElementById('msg6').querySelector('.bubble'),
+            m6: document.getElementById('msg6').querySelector('.bubble'),
         };
 
         // 초기화
-        [el.m1, el.m2, el.m3, el.m4, el.m5, el.m6].forEach(n => n.classList.remove('visible'));
+        [ 'msg1','msg2','msg3','msg4','msg5','msg6' ]
+            .forEach(id => document.getElementById(id).classList.remove('visible'));
         el.aiBar.classList.remove('visible');
         el.aiBar.innerHTML = '';
-        el.m2b.textContent = '';
-        el.m4b.textContent = '';
-        el.m6b.textContent = '';
+        clearDraft();
         await sleep(250);
 
-        // ── T1: 상대 (그대로) ───────────────────────────────
-        el.m1.classList.add('visible');
+        // ───────────────── ① 상대 → 초안 → 코칭 → (보내기) ─────────────────
+        const INITIAL1 = '너가 보기와는 다르게 그런 것도 좋아하는구나ㅎㅎ';
+        const COACHED1 = '넌 진짜 취미가 다양하다ㅎㅎ 어땠어?';
+
+        // ───────────────── ① 상대 → 초안 → 코칭 → (교체 후 보내기) ─────────────────
+        document.getElementById('msg1').classList.add('visible');  // 상대
         await sleep(T_APPEAR);
 
-        // ── T2: 내 말 → 1번 코칭 (그대로) ───────────────────
-        el.m2.classList.add('visible');
-        await type(el.m2b, '너가 보기와는 다르게 그런 것도 좋아하는구나ㅎㅎ', TYPE_SPEED);
-        await sleep(T_AFTER_TYPE);
+        // 1) 내 초안 타이핑
+        await typeIntoDraft(INITIAL1, 70, { replace: true });
+        await sleep(T_PRE_COACH);
 
+        // 2) 코칭 노출 (칩에도 최종 문장 넣어줌)
         showAI({
             title: '말투 코칭',
-            desc: '“보기와 다르게”는 평가처럼 들릴 수 있어요. <em>관심/칭찬</em> 중심으로 바꿔볼까요?',
+            desc: '“보기와 다르게”는 평가처럼 들릴 수 있어요. <em>관심/칭찬</em> + <em>열린 질문</em>으로 바꿔볼까요?',
             recos: [
+                COACHED1,  // ← 이 칩을 제일 앞에 둠 (클릭 시 초안에 들어감)
                 '완전 반전매력이다 취미의 폭이 되게 넓네ㅎㅎ',
-                '넌 진짜 취미가 다양하다ㅎㅎ',
                 '와 멋지다!'
             ]
         });
+
+        // 3) 잠깐 멈칫한 뒤, 아직 사용자가 수정 안했다면 자동으로 교체
+        await sleep(500); // 코칭 뜬 뒤 짧은 텀
+        if (getDraft() === INITIAL1) {
+            await typeIntoDraft(COACHED1, 45, { replace: true });
+        }
+        
         await sleep(T_AFTER_COACH);
 
-        // ── T3: 상대 → (추가 대기) → 2번 코칭 → (추가 대기) → 내 T4 ──
-        el.m3.classList.add('visible');
+        // 클릭 or 자동전송
+        await waitForSend(AUTO_SEND);
+        sendDraftTo(el.m2);  // msg2(내 버블)에 반영
+        await sleep(T_AFTER_SEND);
+        // ───────────────── ② 상대 → 코칭 → (보내기) ─────────────────
+        document.getElementById('msg3').classList.add('visible');
         await sleep(T_APPEAR);
-        await sleep(T_PRE_COACH); // ★ 추가: 코칭 전에 잠깐 대기
+        await sleep(T_PRE_COACH);
 
         showAI({
             title: '대화 확장',
-            desc: '<em>칭찬 + 제안</em>을 붙이면 자연스러운 대화 확장이 가능해요.',
+            desc: '칭찬 뒤에 <em>열린 질문</em>을 붙이면 대화가 더 부드러워져요.',
             recos: [
-                '반전 매력이다',
+                '반전 매력이네 ㅎㅎ',
                 '뭐가 제일 재밌었어?',
                 '다음엔 나도 만들어 줄 수 있어?'
             ]
         });
         await sleep(T_AFTER_COACH);
-        await sleep(T_PRE_REPLY); // ★ 추가: 코칭 후 내 말 전 잠깐 대기
 
-        el.m4.classList.add('visible');
-        await type(el.m4b, '완전 반전매력이네 ㅎㅎ 다음에 나도 만들어줘!', TYPE_SPEED);
-        await sleep(T_AFTER_TYPE);
-
-        // ── T5: 상대 → (추가 대기) → 3번 코칭 → (추가 대기) → 내 T6 ──
-        el.m5.classList.add('visible');
+        await typeIntoDraft('완전 반전매력이네 ㅎㅎ 다음에 나도 만들어줘!', 70, {replace:true}); // 기본 추천을 초안에 채워둠(원하면 칩으로 덮어서 수정)
+        await waitForSend(AUTO_SEND);
+        sendDraftTo(el.m4);
+        await sleep(T_AFTER_SEND);
+        // ───────────────── ③ 상대 → 코칭 → (보내기) ─────────────────
+        document.getElementById('msg5').classList.add('visible');
         await sleep(T_APPEAR);
-        await sleep(T_PRE_COACH); // ★ 추가
+        await sleep(T_PRE_COACH);
 
         showAI({
-            title: '관계 심화',
-            desc: ' <em>공간 +열린질문</em>을 통하면 관계를 심화할 수 있어요',
+            title: '마무리 코칭',
+            desc: '공감 + <em>열린질문</em>으로 따뜻하게 마무리해봐요.',
             recos: [
+                
                 '다음에 배우고 싶은 요리가 있어?',
-                '기대된다 ㅎㅎ'        
+                '기대된다 ㅎㅎ'
+                
             ]
         });
         await sleep(T_AFTER_COACH);
-        await sleep(T_PRE_REPLY); // ★ 추가
 
-        el.m6.classList.add('visible');
-        await type(el.m6b, '기대되네 ㅎㅎ 다음에 배우고 싶은 요리 있어?', TYPE_SPEED);
+        await typeIntoDraft('기대되네ㅎㅎ 다음에 배우고 싶은 요리있어?', 70, {replace:true});
+        await waitForSend(AUTO_SEND);
+        sendDraftTo(el.m6);
 
         isApiAnimating = false;
     }
+
 
 
     function type(node, text, charDelay = 60) {
@@ -247,4 +319,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.lucide?.createIcons) {
         window.lucide.createIcons();
     }
+    // contenteditable에 타이핑 애니메이션
+    async function typeIntoDraft(text, charDelay = 40, {replace=true} = {}){
+        const el = document.getElementById('compose-input');
+        if (!el) return;
+        if (replace) el.textContent = '';
+        el.focus();
+        for (const ch of text){
+            el.textContent += ch;
+            placeCaretAtEnd(el);
+            await sleep(charDelay);
+        }
+    }
+
 });

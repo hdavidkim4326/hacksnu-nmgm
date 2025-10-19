@@ -244,6 +244,9 @@
     flex-direction: column;
     gap: 16px;
     overflow-y: auto;
+    --kb-h: 180px;        /* 키보드 SVG 높이 */
+    --compose-h: 56px;    /* 입력칸 높이(버튼 포함) */
+    padding-bottom: calc(var(--kb-h) + var(--compose-h) + 16px);
 }
 .ai-suggestion-bar {
     position: absolute; /* 수정: 키보드 위에 떠 있도록 */
@@ -261,6 +264,10 @@
     border-top: 1px solid #eee;
     opacity: 0;
     transition: opacity 0.5s ease;
+    bottom: calc(var(--kb-h) + var(--compose-h));
+    z-index: 3;
+    order:1;
+    position: sticky;
 }
 .ai-suggestion-bar.visible {
     opacity: 1;
@@ -578,3 +585,84 @@
 /* 버튼들 */
 .btn-back { background:none; border:none; cursor:pointer; color:var(--text-secondary); display:flex; align-items:center; }
 
+/* 높이 변수 (키보드/입력칸) */
+.keyboard-prototype-container{
+    --kb-h: 180px;      /* 키보드 SVG 높이 */
+    --compose-h: 56px;  /* 입력칸 바 높이 */
+    --coach-gap: 50px;
+    display:flex;
+    flex-direction:column;
+    height:100%;
+}
+
+/* 대화 영역: 아래에 키보드+입력칸만큼 공간 확보 */
+.chat-history{
+    flex:1 1 auto;
+    overflow-y:auto;
+    padding-bottom: calc(var(--kb-h) + var(--compose-h) + 16px);
+}
+
+/* ── 세로 순서 고정: 코칭 → 입력칸 → 키보드 ── */
+.ai-suggestion-bar{
+    order:1;
+    position: sticky;
+    bottom: calc(var(--kb-h) + var(--compose-h) + var(--coach-gap));
+    z-index: 3;
+
+    /* 보기 좋게 여백/배경(선택사항) */
+    padding: 10px 12px;
+    background: #fff;                /* 코칭 박스가 겹쳐 보여도 독립적으로 보이게 */
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    margin-bottom: 50px;              /* chat-history 내용과도 간격 */
+}
+
+.compose{
+    order:2;
+    position: sticky;
+    bottom: var(--kb-h);  /* 키보드 바로 위 */
+    z-index: 4;
+
+    display:flex; align-items:center; gap:12px;
+    height: var(--compose-h);
+    padding: 10px 12px;
+    background: #0f1419;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.keyboard-area{
+    order:3;
+    position: sticky;
+    bottom: 0;           /* 맨 아래 */
+    z-index: 2;
+}
+
+/* 입력 상자 & 전송 버튼 */
+.compose-input{
+    flex:1;
+    min-height:40px;
+    max-height:92px;
+    padding:10px 12px;
+    border-radius:22px;
+    background:#222831;
+    color:#fff;
+    line-height:1.4;
+    overflow-y:auto;
+    outline:none;
+}
+.compose-input:empty:before{
+    content:attr(data-placeholder);
+    color:rgba(255,255,255,0.5);
+}
+.send-btn{
+    width:44px; height:44px; border-radius:50%;
+    border:0; background:#ffd400; color:#111; font-weight:900;
+}
+
+/* 키보드 SVG 크기 고정 */
+.keyboard-area .keyboard-svg{
+    display:block; width:100%;
+    height: var(--kb-h);          /* 변수로 고정 */
+    max-height: var(--kb-h);
+    object-fit:contain;
+}
