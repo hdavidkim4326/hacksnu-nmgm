@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 3) 잠깐 멈칫한 뒤, 아직 사용자가 수정 안했다면 자동으로 교체
-        await sleep(500); // 코칭 뜬 뒤 짧은 텀
+        await sleep(900); // 코칭 뜬 뒤 짧은 텀
         if (getDraft() === INITIAL1) {
             await typeIntoDraft(COACHED1, 45, { replace: true });
         }
