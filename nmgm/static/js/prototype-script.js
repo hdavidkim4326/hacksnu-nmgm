@@ -252,6 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
         await waitForSend(AUTO_SEND);
         sendDraftTo(el.m2);  // msg2(내 버블)에 반영
         await sleep(T_AFTER_SEND);
+        isApiAnimating = false;      // 상태 복구
+        return; 
         // ───────────────── ② 상대 → 코칭 → (보내기) ─────────────────
         document.getElementById('msg3').classList.add('visible');
         await sleep(T_APPEAR);
